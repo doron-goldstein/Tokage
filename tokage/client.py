@@ -67,7 +67,7 @@ class Client:
 
     async def search_id(self, type_, query: str):
         """Parse a google query and return the ID."""
-        query = f"site:myanimelist.net/{type_}/ {query}"
+        query = "site:myanimelist.net/{}/ {}".format(type_, query)
         params = {
             'q': query,
             'safe': 'on'
