@@ -1,6 +1,6 @@
 .. currentmodule:: tokage
 
-API Reference
+Class Reference
 ==============
 
 Client

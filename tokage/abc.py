@@ -92,6 +92,7 @@ class Anime:
     prequel : list[dict]
         WIP - Prequels to the Anime, if any. May be None.
     """
+
     def __init__(self, anime_id, **kwargs):
         self.id = anime_id
         self.title = kwargs.pop('title', None)
@@ -276,6 +277,7 @@ class Character:
         WIP - List of voice actors who played this Character.
 
     """
+
     def __init__(self, char_id, **kwargs):
         self.id = char_id
         self.link = kwargs.pop('link-canonical', None)
@@ -324,6 +326,7 @@ class Person:
         WIP - List of voice acting roles the Person has.
 
     """
+
     def __init__(self, person_id, **kwargs):
         self.id = person_id
         self.link = kwargs.pop('link-canonical', None)
