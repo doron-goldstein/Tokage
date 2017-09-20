@@ -6,6 +6,13 @@
 Welcome to Tokage's documentation!
 ==================================
 
+Contents
+--------
+
+.. toctree::
+    :maxdepth: 2
+
+    tokage
 
 Indices and tables
 ==================

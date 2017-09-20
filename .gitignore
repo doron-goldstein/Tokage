@@ -1,6 +1,11 @@
 
 */.vscode
 */__pycache__
+dox/_build
+dox/_static
+dox/_template
+dox/Makefile
+dox/make.bat
 build
 dist
 examples
