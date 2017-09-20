@@ -3,7 +3,7 @@
 */__pycache__
 dox/_build
 dox/_static
-dox/_template
+dox/_templates
 dox/Makefile
 dox/make.bat
 build
