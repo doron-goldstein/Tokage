@@ -1,7 +1,7 @@
 .. currentmodule:: tokage
 
 Class Reference
-==============
+===============
 
 Client
 -------
