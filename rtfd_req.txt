@@ -1,3 +1,2 @@
-tokage --global-option="--no-cache-dir" \
-       --install-option="--ignore-installed"
+tokage --install-option="--ignore-installed"
 # sphinxcontrib.napoleon
