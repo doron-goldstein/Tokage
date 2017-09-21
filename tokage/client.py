@@ -19,13 +19,15 @@ class Client:
         The session to use for aiohttp requests.
         Defaults to creating a new one.
 
-    .. attribute:: session
+    Attributes
+    ----------
+    session : aiohttp.ClientSession
 
         The session used for aiohttp requests.
 
     """
     def __init__(self, session=aiohttp.ClientSession()):
-        self.session = session #: The session used for aiohttp requests.
+        self.session = session # The session used for aiohttp requests.
 
     async def request(self, url):
         async with self.session.get(url) as resp:
