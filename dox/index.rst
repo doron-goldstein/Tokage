@@ -13,6 +13,7 @@ Contents
     :maxdepth: 2
 
     tokage
+    examples
 
 Indices and tables
 ==================

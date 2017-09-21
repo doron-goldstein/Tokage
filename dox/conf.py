@@ -32,13 +32,7 @@ sys.path.insert(0, os.path.abspath('.'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.githubpages']
-
-# if os.environ.get("READTHEDOCS"):
-#     extensions.append('sphinxcontrib.napoleon')
-# else:
-#     extensions.append('sphinx.ext.napoleon')
-extensions.append('sphinx.ext.napoleon')
+    'sphinx.ext.githubpages', 'sphinx.ext.napoleon', 'sphinxcontrib-asyncio']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
