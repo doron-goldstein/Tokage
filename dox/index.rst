@@ -15,8 +15,9 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    tokage
+    getting_started
     examples
+    tokage
 
 Indices and tables
 ==================
