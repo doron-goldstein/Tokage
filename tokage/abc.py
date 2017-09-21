@@ -91,6 +91,7 @@ class Anime:
 
     prequel : list[dict]
         WIP - Prequels to the Anime, if any. May be None.
+
     """
 
     def __init__(self, anime_id, **kwargs):
@@ -208,6 +209,7 @@ class Manga:
 
     prequel : list[dict]
         WIP - Prequels to the Manga, if any. May be None.
+    
     """
 
     def __init__(self, manga_id, **kwargs):

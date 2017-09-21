@@ -32,9 +32,7 @@ class Client:
             return await resp.json()
 
     async def get_anime(self, target_id):
-        """Retrieves an Anime object from an ID
-        :return: :class:`~Anime`
-        """
+        """Retrieves an :class:`Anime` object from an ID"""
         response_json = await self.request(ANIME_URL + str(target_id))
         if response_json is None:
             raise AnimeNotFound("Anime with the given ID was not found")
@@ -42,7 +40,7 @@ class Client:
         return result
 
     async def get_manga(self, target_id):
-        """Retrieves a :class:`~Manga` object from an ID"""
+        """Retrieves a :class:`Manga` object from an ID"""
         response_json = await self.request(MANGA_URL + str(target_id))
         if response_json is None:
             raise MangaNotFound("Manga with the given ID was not found")
@@ -50,7 +48,7 @@ class Client:
         return result
 
     async def get_character(self, target_id):
-        """Retrieves a :class:`~Character` object from an ID"""
+        """Retrieves a :class:`Character` object from an ID"""
         response_json = await self.request(CHARACTER_URL + str(target_id))
         if response_json is None:
             raise CharacterNotFound("Character with the given ID was not found")
@@ -58,7 +56,7 @@ class Client:
         return result
 
     async def get_person(self, target_id):
-        """Retrieves a :class:`~Person` object from an ID"""
+        """Retrieves a :class:`Person` object from an ID"""
         response_json = await self.request(PERSON_URL + str(target_id))
         if response_json is None:
             raise PersonNotFound("Person with the given ID was not found")

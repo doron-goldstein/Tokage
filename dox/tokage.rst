@@ -18,7 +18,7 @@ Anime
 .. autoclass:: Anime
 
 Manga
-~~~~~~
+~~~~~~ 
 .. autoclass:: Manga
 
 Character
