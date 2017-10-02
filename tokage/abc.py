@@ -213,7 +213,7 @@ class Manga:
 
     prequel : list[dict]
         WIP - Prequels to the Manga, if any. May be None.
-    
+
     """
 
     def __init__(self, manga_id, **kwargs):
@@ -230,7 +230,7 @@ class Manga:
         if not " to " in self._publish_time:
             self.publish_start = self._publish_time
             self.publish_end = None
-        else
+        else:
             self.publish_start, self.publish_end = self._publish_time.split(" to ")
         self.synopsis = kwargs.pop('synopsis', None)
         self.author = kwargs.pop('author', None)[0]["name"] # TODO: Person
