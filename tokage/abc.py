@@ -227,7 +227,11 @@ class Manga:
         self.volumes = kwargs.pop('volumes', None)
         self.chapters = kwargs.pop('chapters', None)
         self._publish_time = kwargs.pop('published', None)
-        self.publish_start, self.publish_end = self._publish_time.split(" to ")
+        if not " to " in self._publish_time:
+            self.publish_start = self._publish_time
+            self.publish_end = None
+        else
+            self.publish_start, self.publish_end = self._publish_time.split(" to ")
         self.synopsis = kwargs.pop('synopsis', None)
         self.author = kwargs.pop('author', None)[0]["name"] # TODO: Person
         self.serialization = kwargs.pop('serialization', None)[0] # TODO: add serializations
