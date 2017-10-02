@@ -5,7 +5,7 @@ import aiohttp
 from .abc import Anime, Manga, Person, Character
 from .errors import *
 
-BASE_URL = 'https://jikan.me/api/v1.1/'
+BASE_URL = 'https://jikan.me/api/v1.2/'
 ANIME_URL = BASE_URL + 'anime/'
 MANGA_URL = BASE_URL + 'manga/'
 PERSON_URL = BASE_URL + 'person/'
