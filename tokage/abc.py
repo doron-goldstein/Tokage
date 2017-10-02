@@ -104,7 +104,11 @@ class Anime:
         self.status = kwargs.pop('status', None)
         self.episodes = kwargs.pop('episodes', None)
         self._air_time = kwargs.pop('aired', None)
-        self.air_start, self.air_end = self._air_time.split(" to ")
+        if not " to " in self._air_time:
+            self.air_start = self._air_time
+            self.air_end = None
+        else:
+            self.air_start, self.air_end = self._air_time.split(" to ")
         self.premiered = kwargs.pop('premiered', None)
         self.broadcast = kwargs.pop('broadcast', None)
         self.synopsis = kwargs.pop('synopsis', None)
