@@ -30,10 +30,10 @@ class Anime:
         Episode count of the Manga.
 
     air_start : str
-        Publication start date.
+        Airing start date.
 
     air_end : str
-        Publication end date.
+        Airing end date.
 
     synopsis : str
         Description of the Anime.
