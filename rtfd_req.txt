@@ -1,2 +1,2 @@
-tokage
+git+https://gitlab.com/Synder/Tokage.git
 sphinxcontrib-asyncio
