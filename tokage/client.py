@@ -1,7 +1,10 @@
 import re
+import asyncio
 from urllib.parse import parse_qs
 from lxml import etree
+
 import aiohttp
+
 from .abc import Anime, Manga, Person, Character
 from .errors import *
 
@@ -26,12 +29,13 @@ class Client:
         The session used for aiohttp requests.
 
     """
-    def __init__(self, session=aiohttp.ClientSession()):
-        self.session = session # The session used for aiohttp requests.
+    def __init__(self, session=None, *, loop=None):
+        self.loop = asyncio.get_event_loop() if loop is None else loop
+        self.session = aiohttp.ClientSession(loop=self.loop) if session is None else session
 
     async def cleanup(self):
         await self.session.close()
-    
+
     async def request(self, url):
         async with self.session.get(url) as resp:
             return await resp.json()
