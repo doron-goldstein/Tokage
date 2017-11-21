@@ -29,6 +29,9 @@ class Client:
     def __init__(self, session=aiohttp.ClientSession()):
         self.session = session # The session used for aiohttp requests.
 
+    async def cleanup(self):
+        await self.session.close()
+    
     async def request(self, url):
         async with self.session.get(url) as resp:
             return await resp.json()
