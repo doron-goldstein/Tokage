@@ -14,6 +14,7 @@ MANGA_URL = BASE_URL + 'manga/'
 PERSON_URL = BASE_URL + 'person/'
 CHARACTER_URL = BASE_URL + 'character/'
 
+
 class Client:
     """Client connection to the MAL API.
     This class is used to interact with the API.
@@ -88,7 +89,7 @@ class Client:
             if resp.status != 200:
                 raise RuntimeError('Google somehow failed to respond.')
 
-            root = etree.fromstring(await resp.text(), etree.HTMLParser()) # pylint: disable=E1101
+            root = etree.fromstring(await resp.text(), etree.HTMLParser())
             nodes = root.findall(".//div[@class='g']")
             for node in nodes:
                 url_node = node.find('.//h3/a')

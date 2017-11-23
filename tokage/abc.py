@@ -1,5 +1,6 @@
 """Base Classes for the API."""
 
+
 class Anime:
     """Represents a MAL Anime
 
@@ -104,7 +105,7 @@ class Anime:
         self.status = kwargs.pop('status', None)
         self.episodes = kwargs.pop('episodes', None)
         self._air_time = kwargs.pop('aired', None)
-        if not " to " in self._air_time:
+        if " to " not in self._air_time:
             self.air_start = self._air_time
             self.air_end = None
         else:
@@ -133,6 +134,7 @@ class Anime:
             self.adaptation = self.related.get("Adaptation", None)
             self.sequel = self.related.get("Sequel", None)
             self.prequel = self.related.get("Prequel", None)
+
 
 class Manga:
     """Represents a MAL Manga (Includes Novels)
@@ -227,14 +229,14 @@ class Manga:
         self.volumes = kwargs.pop('volumes', None)
         self.chapters = kwargs.pop('chapters', None)
         self._publish_time = kwargs.pop('published', None)
-        if not " to " in self._publish_time:
+        if " to " not in self._publish_time:
             self.publish_start = self._publish_time
             self.publish_end = None
         else:
             self.publish_start, self.publish_end = self._publish_time.split(" to ")
         self.synopsis = kwargs.pop('synopsis', None)
-        self.author = kwargs.pop('author', None)[0]["name"] # TODO: Person
-        self.serialization = kwargs.pop('serialization', None)[0] # TODO: add serializations
+        self.author = kwargs.pop('author', None)[0]["name"]  # TODO: Person
+        self.serialization = kwargs.pop('serialization', None)[0]  # TODO: add serializations
         self._raw_genres = kwargs.pop('genre', None)
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
@@ -245,11 +247,12 @@ class Manga:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
-        self.related = kwargs.pop('related', None) # TODO: SOMETHING.
+        self.related = kwargs.pop('related', None)  # TODO: SOMETHING.
         if self.related is not None:
             self.adaptation = self.related.get("Adaptation", None)
             self.sequel = self.related.get("Sequel", None)
             self.prequel = self.related.get("Prequel", None)
+
 
 class Character:
     """Represents a MAL Character
@@ -294,11 +297,12 @@ class Character:
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image', None)
         self.favorites = kwargs.pop('member-favorites', None)
-        self.animeography = kwargs.pop('animeography', None) # TODO: Handle
-        self.mangaography = kwargs.pop('mangaography', None) # TODO: Handle        
+        self.animeography = kwargs.pop('animeography', None)  # TODO: Handle
+        self.mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
         self.japanese = kwargs.pop('name-japanese', None)
         self.about = kwargs.pop('about', None)
-        self.voice_actors = kwargs.pop('voice-actors', None) # TODO: Handle
+        self.voice_actors = kwargs.pop('voice-actors', None)  # TODO: Handle
+
 
 class Person:
     """Represents a MAL Person (Voice Actors, Staff, etc.)
@@ -343,9 +347,9 @@ class Person:
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image', None)
         self.favorites = kwargs.pop('member-favorites', None)
-        self.anime = kwargs.pop('anime-staff-position', None) # TODO: Handle
-        self.manga = kwargs.pop('published-manga', None) # TODO: Handle
+        self.anime = kwargs.pop('anime-staff-position', None)  # TODO: Handle
+        self.manga = kwargs.pop('published-manga', None)  # TODO: Handle
         self.birthday = kwargs.pop('birthday', None)
         self.more = kwargs.pop('more', None)
         self.website = kwargs.pop('website', None)
-        self.voice_acting = kwargs.pop('voice-acting-role', None) # TODO: Handle
+        self.voice_acting = kwargs.pop('voice-acting-role', None)  # TODO: Handle
