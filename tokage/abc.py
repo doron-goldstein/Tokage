@@ -280,7 +280,7 @@ class Character:
     mangaography : list[dict]
         Manga the Character is featured in.
 
-    japanese : str
+    japanese_name : str
         Japanese name of the character.
 
     about : str
