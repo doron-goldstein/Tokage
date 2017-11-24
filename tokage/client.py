@@ -44,11 +44,11 @@ class Client:
     async def json(self, resp, encoding=None):
         """Read, decodes and unescapes a JSON `aiohttp.ClientResponse` object."""
         def unescape_json(json_data):
-            if type(json_data) == str:
+            if isinstance (json_data, str):
                 return self.html_parser.unescape(json_data)
-            if type(json_data) == list:
+            if isinstance (json_data, list):
                 return [unescape_json(i) for i in json_data]
-            if type(json_data) == dict:
+            if isinstance (json_data, dict):
                 return {
                     unescape_json(k): unescape_json(v)
                         for k, v in json_data.items()
