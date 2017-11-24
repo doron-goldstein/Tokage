@@ -27,15 +27,17 @@ Basic Example
     async def main()
         client = tokage.Client() # Create a new Client instance.
         
-        anime_id = await client.search_id("anime", "Steins Gate") # Search for an ID of an Anime called "Steins gate"
-        anime = await client.get_anime(anime_id) # Get the Anime object from the API
+        anime_id = await client.search_id("anime", "Steins Gate")  # Search for an ID of an Anime called "Steins gate"
+        anime = await client.get_anime(anime_i  # Get the Anime object from the API
     
-        manga_id = await client.search_id("manga", "my hero academia") # Search for an ID of a Manga called "my hero academia"
-        manga = await client.get_manga(manga_id) # Get the Manga object from the API
+        manga_id = await client.search_id("manga", "my hero academia")  # Search for an ID of a Manga called "my hero academia"
+        manga = await client.get_manga(manga_id)  # Get the Manga object from the API
 
-        print("Anime title: {}".format(anime.title)) # Print the title of the Anime
-        print("Manga title: {}".format(manga.title)) # Print the title of the Manga
-    
+        print("Anime title: {}".format(anime.title))  # Print the title of the Anime
+        print("Manga title: {}".format(manga.title))  # Print the title of the Manga
+        
+        await client.cleanup()  # finally, clean up
+
     loop = asyncio.get_event_loop() # Get the event loop
     loop.run_until_complete(main()) # Run main
 
