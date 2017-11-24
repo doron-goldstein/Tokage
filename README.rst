@@ -17,7 +17,7 @@ Example
     import asyncio
     import tokage
 
-    async def main()
+    async def main():
         client = tokage.Client()  # Create a new Client instance
         
         anime_id = await client.search_id("anime", "re zero")  # Search for an ID
