@@ -13,6 +13,7 @@ setup(
     packages=['tokage'],
     license='MIT',
     description='Async wrapper for the MyAnimeList API',
+    url='https://gitlab.com/Synder/Tokage',
     include_package_data=True,
     install_requires=requirements
 )
