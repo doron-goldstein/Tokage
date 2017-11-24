@@ -41,17 +41,17 @@ class Client:
     async def cleanup(self):
         await self.session.close()
 
-    async def json(self, resp, encoding=None):
+    async def _json(self, resp, encoding=None):
         """Read, decodes and unescapes a JSON `aiohttp.ClientResponse` object."""
         def unescape_json(json_data):
-            if isinstance (json_data, str):
+            if isinstance(json_data, str):
                 return self.html_parser.unescape(json_data)
-            if isinstance (json_data, list):
+            if isinstance(json_data, list):
                 return [unescape_json(i) for i in json_data]
-            if isinstance (json_data, dict):
+            if isinstance(json_data, dict):
                 return {
                     unescape_json(k): unescape_json(v)
-                        for k, v in json_data.items()
+                    for k, v in json_data.items()
                 }
             return json_data
 
@@ -71,7 +71,7 @@ class Client:
 
     async def request(self, url):
         async with self.session.get(url) as resp:
-            return await self.json(resp)
+            return await self._json(resp)
 
     async def get_anime(self, target_id):
         """Retrieves an :class:`Anime` object from an ID
