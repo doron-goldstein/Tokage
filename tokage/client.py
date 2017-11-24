@@ -6,7 +6,7 @@ from lxml import etree
 import aiohttp
 
 from .abc import Anime, Manga, Person, Character
-from .errors import *
+from .errors import *  # noqa
 
 BASE_URL = 'https://jikan.me/api/v1.2/'
 ANIME_URL = BASE_URL + 'anime/'
@@ -42,7 +42,10 @@ class Client:
             return await resp.json()
 
     async def get_anime(self, target_id):
-        """Retrieves an :class:`Anime` object from an ID"""
+        """Retrieves an :class:`Anime` object from an ID
+
+        Raises a :class:`AnimeNotFound` Error if an Anime was not found corresponding to the ID.
+        """
         response_json = await self.request(ANIME_URL + str(target_id))
         if response_json is None:
             raise AnimeNotFound("Anime with the given ID was not found")
@@ -50,7 +53,10 @@ class Client:
         return result
 
     async def get_manga(self, target_id):
-        """Retrieves a :class:`Manga` object from an ID"""
+        """Retrieves a :class:`Manga` object from an ID
+
+        Raises a :class:`MangaNotFound` Error if a Manga was not found corresponding to the ID.
+        """
         response_json = await self.request(MANGA_URL + str(target_id))
         if response_json is None:
             raise MangaNotFound("Manga with the given ID was not found")
@@ -58,7 +64,10 @@ class Client:
         return result
 
     async def get_character(self, target_id):
-        """Retrieves a :class:`Character` object from an ID"""
+        """Retrieves a :class:`Character` object from an ID
+
+        Raises a :class:`CharacterNotFound` Error if a Character was not found corresponding to the ID.
+        """
         response_json = await self.request(CHARACTER_URL + str(target_id))
         if response_json is None:
             raise CharacterNotFound("Character with the given ID was not found")
@@ -66,7 +75,10 @@ class Client:
         return result
 
     async def get_person(self, target_id):
-        """Retrieves a :class:`Person` object from an ID"""
+        """Retrieves a :class:`Person` object from an ID
+
+        Raises a :class:`PersonNotFound` Error if a Person was not found corresponding to the ID.
+        """
         response_json = await self.request(PERSON_URL + str(target_id))
         if response_json is None:
             raise PersonNotFound("Person with the given ID was not found")
@@ -74,7 +86,10 @@ class Client:
         return result
 
     async def search_id(self, type_, query: str):
-        """Parse a google query and return the ID."""
+        """Parse a google query and return the ID.
+
+        Raises a :class:`TokageNotFound` Error if an ID was not found.
+        """
         query = "site:myanimelist.net/{}/ {}".format(type_, query)
         params = {
             'q': query,
@@ -101,7 +116,10 @@ class Client:
                     continue
 
                 url = parse_qs(url[5:])['q'][0]
-                return self.parse_id(url)
+                id = self.parse_id(url)
+                if id is None:
+                    raise TokageNotFound("An ID corresponding to the given query was not found")
+                return id
 
     @staticmethod
     def parse_id(link):
@@ -112,4 +130,4 @@ class Client:
             target_id = match.group(1)
             return target_id
         else:
-            return None
+            None

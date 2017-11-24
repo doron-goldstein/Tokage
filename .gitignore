@@ -6,6 +6,7 @@ dox/_static
 dox/_templates
 dox/Makefile
 dox/make.bat
+dox/run.bat
 build
 dist
 examples
