@@ -1,5 +1,8 @@
-import re
 import asyncio
+import json
+import re
+
+from html.parser import HTMLParser
 from urllib.parse import parse_qs
 from lxml import etree
 
@@ -33,13 +36,42 @@ class Client:
     def __init__(self, session=None, *, loop=None):
         self.loop = asyncio.get_event_loop() if loop is None else loop
         self.session = aiohttp.ClientSession(loop=self.loop) if session is None else session
+        self.html_parser = HTMLParser()
 
     async def cleanup(self):
         await self.session.close()
 
+    async def json(self, resp, encoding=None):
+        """Read, decodes and unescapes a JSON `aiohttp.ClientResponse` object."""
+        def unescape_json(json_data):
+            if isinstance (json_data, str):
+                return self.html_parser.unescape(json_data)
+            if isinstance (json_data, list):
+                return [unescape_json(i) for i in json_data]
+            if isinstance (json_data, dict):
+                return {
+                    unescape_json(k): unescape_json(v)
+                        for k, v in json_data.items()
+                }
+            return json_data
+
+        if resp._content is None:
+            await resp.read()
+
+        stripped = resp._content.strip()
+        if not stripped:
+            return None
+
+        if encoding is None:
+            encoding = resp._get_encoding()
+
+        json_resp = json.loads(stripped.decode(encoding))
+
+        return unescape_json(json_resp)
+
     async def request(self, url):
         async with self.session.get(url) as resp:
-            return await resp.json()
+            return await self.json(resp)
 
     async def get_anime(self, target_id):
         """Retrieves an :class:`Anime` object from an ID
