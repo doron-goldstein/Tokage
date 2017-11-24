@@ -299,7 +299,7 @@ class Character:
         self.favorites = kwargs.pop('member-favorites', None)
         self.animeography = kwargs.pop('animeography', None)  # TODO: Handle
         self.mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
-        self.japanese = kwargs.pop('name-japanese', None)
+        self.japanese_name = kwargs.pop('name-kanji', None)
         self.about = kwargs.pop('about', None)
         self.voice_actors = kwargs.pop('voice-actors', None)  # TODO: Handle
 
