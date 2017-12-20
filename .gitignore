@@ -1,12 +1,12 @@
 
 */.vscode
 */__pycache__
-dox/_build
-dox/_static
-dox/_templates
-dox/Makefile
-dox/make.bat
-dox/run.bat
+docs/_build
+docs/_static
+docs/_templates
+docs/Makefile
+docs/make.bat
+docs/run.bat
 build
 dist
 examples
@@ -14,3 +14,4 @@ Tokage.egg-info
 MANIFEST.in
 pypi.bat
 pypi.py
+.flake8
