@@ -11,7 +11,7 @@ import aiohttp
 from .abc import Anime, Manga, Person, Character
 from .errors import *  # noqa
 
-BASE_URL = 'https://jikan.me/api/v1.2/'
+BASE_URL = 'https://api.jikan.me/'
 ANIME_URL = BASE_URL + 'anime/'
 MANGA_URL = BASE_URL + 'manga/'
 PERSON_URL = BASE_URL + 'person/'
