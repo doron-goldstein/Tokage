@@ -1,14 +1,13 @@
 import asyncio
 import json
 import re
-
 from html.parser import HTMLParser
 from urllib.parse import parse_qs
-from lxml import etree
 
 import aiohttp
+from lxml import etree
 
-from .abc import Anime, Manga, Person, Character
+from .abc import Anime, Character, Manga, Person
 from .errors import *  # noqa
 
 BASE_URL = 'https://api.jikan.me/'
