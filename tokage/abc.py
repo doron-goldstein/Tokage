@@ -120,7 +120,7 @@ class Anime:
         self._raw_genres = kwargs.pop('genre', None)
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
-        self.genres = [g[1] for g in self._raw_genres] if self._raw_genres else None
+        self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
         self.duration = kwargs.pop('duration', None)
         self.link = kwargs.pop('link-canonical', None)
         self.rating = kwargs.pop('rating', None)
@@ -240,7 +240,7 @@ class Manga:
         self._raw_genres = kwargs.pop('genre', None)
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
-        self.genres = [g[1] for g in self._raw_genres] if self._raw_genres else None
+        self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
         self.link = kwargs.pop('link-canonical', None)
         self.score = kwargs.pop('score', None)
         self.rank = kwargs.pop('ranked', None)
@@ -353,4 +353,3 @@ class Person:
         self.more = kwargs.pop('more', None)
         self.website = kwargs.pop('website', None)
         self.voice_acting = kwargs.pop('voice-acting-role', None)  # TODO: Handle
- 
