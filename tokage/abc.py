@@ -104,7 +104,7 @@ class Anime:
         self.japanese_title = kwargs.pop('japanese', None)
         self.status = kwargs.pop('status', None)
         self.episodes = kwargs.pop('episodes', None)
-        self._air_time = kwargs.pop('aired', None)
+        self._air_time = kwargs.pop('aired_string', None)
         if " to " not in self._air_time:
             self.air_start = self._air_time
             self.air_end = None
@@ -122,7 +122,7 @@ class Anime:
             self._raw_genres = kwargs.pop('genres', None)
         self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
         self.duration = kwargs.pop('duration', None)
-        self.link = kwargs.pop('link-canonical', None)
+        self.link = kwargs.pop('link_canonical', None)
         self.rating = kwargs.pop('rating', None)
         self.score = kwargs.pop('score', None)
         self.rank = kwargs.pop('ranked', None)
@@ -228,7 +228,7 @@ class Manga:
         self.status = kwargs.pop('status', None)
         self.volumes = kwargs.pop('volumes', None)
         self.chapters = kwargs.pop('chapters', None)
-        self._publish_time = kwargs.pop('published', None)
+        self._publish_time = kwargs.pop('published_string', None)
         if " to " not in self._publish_time:
             self.publish_start = self._publish_time
             self.publish_end = None
@@ -241,7 +241,7 @@ class Manga:
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
         self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
-        self.link = kwargs.pop('link-canonical', None)
+        self.link = kwargs.pop('link_canonical', None)
         self.score = kwargs.pop('score', None)
         self.rank = kwargs.pop('ranked', None)
         self.popularity = kwargs.pop('popularity', None)
@@ -293,15 +293,15 @@ class Character:
 
     def __init__(self, char_id, **kwargs):
         self.id = char_id
-        self.link = kwargs.pop('link-canonical', None)
+        self.link = kwargs.pop('link_canonical', None)
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image', None)
-        self.favorites = kwargs.pop('member-favorites', None)
+        self.favorites = kwargs.pop('member_favorites', None)
         self.animeography = kwargs.pop('animeography', None)  # TODO: Handle
         self.mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
-        self.japanese_name = kwargs.pop('name-kanji', None)
+        self.japanese_name = kwargs.pop('name_kanji', None)
         self.about = kwargs.pop('about', None)
-        self.voice_actors = kwargs.pop('voice-actors', None)  # TODO: Handle
+        self.voice_actors = kwargs.pop('voice_actors', None)  # TODO: Handle
 
 
 class Person:
@@ -343,13 +343,13 @@ class Person:
 
     def __init__(self, person_id, **kwargs):
         self.id = person_id
-        self.link = kwargs.pop('link-canonical', None)
+        self.link = kwargs.pop('link_canonical', None)
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image', None)
-        self.favorites = kwargs.pop('member-favorites', None)
-        self.anime = kwargs.pop('anime-staff-position', None)  # TODO: Handle
-        self.manga = kwargs.pop('published-manga', None)  # TODO: Handle
+        self.favorites = kwargs.pop('member_favorites', None)
+        self.anime = kwargs.pop('anime_staff_position', None)  # TODO: Handle
+        self.manga = kwargs.pop('published_manga', None)  # TODO: Handle
         self.birthday = kwargs.pop('birthday', None)
         self.more = kwargs.pop('more', None)
         self.website = kwargs.pop('website', None)
-        self.voice_acting = kwargs.pop('voice-acting-role', None)  # TODO: Handle
+        self.voice_acting = kwargs.pop('voice_acting_role', None)  # TODO: Handle
