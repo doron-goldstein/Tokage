@@ -36,6 +36,9 @@ class Anime:
     air_end : str
         Airing end date.
 
+    airing : bool
+        True if the Anime is airing, False if not.
+
     synopsis : str
         Description of the Anime.
 
@@ -99,11 +102,12 @@ class Anime:
         self.id = anime_id
         self.title = kwargs.pop('title', None)
         self.type = kwargs.pop('type', None)
-        self.synonyms = kwargs.pop('synonyms', None)
-        self.image = kwargs.pop('image', None)
-        self.japanese_title = kwargs.pop('japanese', None)
+        self.synonyms = kwargs.pop('title_synonyms', None)
+        self.image = kwargs.pop('image_url', None)
+        self.japanese_title = kwargs.pop('title_japanese', None)
         self.status = kwargs.pop('status', None)
         self.episodes = kwargs.pop('episodes', None)
+        self.airing = kwargs.pop('airing', None)
         self._air_time = kwargs.pop('aired_string', None)
         if " to " not in self._air_time:
             self.air_start = self._air_time
@@ -125,7 +129,7 @@ class Anime:
         self.link = kwargs.pop('link_canonical', None)
         self.rating = kwargs.pop('rating', None)
         self.score = kwargs.pop('score', None)
-        self.rank = kwargs.pop('ranked', None)
+        self.rank = kwargs.pop('rank', None)
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
@@ -173,6 +177,9 @@ class Manga:
 
     publish_end : str
         Publication end date.
+
+    publishing : bool
+        True if the manga is publishing, False if not.
 
     synopsis : str
         Description of the Manga.
@@ -222,12 +229,13 @@ class Manga:
         self.id = manga_id
         self.title = kwargs.pop('title', None)
         self.type = kwargs.pop('type', None)
-        self.synonyms = kwargs.pop('synonyms', None)
-        self.image = kwargs.pop('image', None)
-        self.japanese_title = kwargs.pop('japanese', None)
+        self.synonyms = kwargs.pop('title_synonyms', None)
+        self.image = kwargs.pop('image_url', None)
+        self.japanese_title = kwargs.pop('title_japanese', None)
         self.status = kwargs.pop('status', None)
         self.volumes = kwargs.pop('volumes', None)
         self.chapters = kwargs.pop('chapters', None)
+        self.publishing = kwargs.pop('publishing', None)
         self._publish_time = kwargs.pop('published_string', None)
         if " to " not in self._publish_time:
             self.publish_start = self._publish_time
@@ -243,7 +251,7 @@ class Manga:
         self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
         self.link = kwargs.pop('link_canonical', None)
         self.score = kwargs.pop('score', None)
-        self.rank = kwargs.pop('ranked', None)
+        self.rank = kwargs.pop('rank', None)
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
@@ -295,7 +303,7 @@ class Character:
         self.id = char_id
         self.link = kwargs.pop('link_canonical', None)
         self.name = kwargs.pop('name', None)
-        self.image = kwargs.pop('image', None)
+        self.image = kwargs.pop('image_url', None)
         self.favorites = kwargs.pop('member_favorites', None)
         self.animeography = kwargs.pop('animeography', None)  # TODO: Handle
         self.mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
@@ -345,7 +353,7 @@ class Person:
         self.id = person_id
         self.link = kwargs.pop('link_canonical', None)
         self.name = kwargs.pop('name', None)
-        self.image = kwargs.pop('image', None)
+        self.image = kwargs.pop('image_url', None)
         self.favorites = kwargs.pop('member_favorites', None)
         self.anime = kwargs.pop('anime_staff_position', None)  # TODO: Handle
         self.manga = kwargs.pop('published_manga', None)  # TODO: Handle
