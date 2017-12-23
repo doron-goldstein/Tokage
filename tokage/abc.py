@@ -296,14 +296,14 @@ class Character:
         self.favorites = kwargs.pop('member_favorites', None)
 
         self.animeography = []
-        self._raw_animeography = kwargs.pop('animeography', None)  # TODO: Handle
+        self._raw_animeography = kwargs.pop('animeography', None)
         for anime in self._raw_animeography:
             anime['id'] = parse_id(anime['url'])
             obj = PartialAnime.from_character(anime)
             self.animeography.append(obj)
 
         self.mangaography = []
-        self._raw_mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
+        self._raw_mangaography = kwargs.pop('mangaography', None)
         for manga in self._raw_mangaography:
             manga['id'] = parse_id(manga['url'])
             obj = PartialManga.from_character(manga)
