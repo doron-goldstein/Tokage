@@ -1,6 +1,5 @@
 import asyncio
 import json
-import re
 from html.parser import HTMLParser
 from urllib.parse import parse_qs
 
@@ -8,6 +7,7 @@ import aiohttp
 from lxml import etree
 
 from .abc import Anime, Character, Manga, Person
+from .utils import parse_id
 from .errors import *  # noqa
 
 BASE_URL = 'https://api.jikan.me/'
@@ -147,18 +147,7 @@ class Client:
                     continue
 
                 url = parse_qs(url[5:])['q'][0]
-                id = self.parse_id(url)
+                id = parse_id(url)
                 if id is None:
                     raise TokageNotFound("An ID corresponding to the given query was not found")
                 return id
-
-    @staticmethod
-    def parse_id(link):
-        """Get ID from a myanimelist link."""
-        pattern = r'(?:\/([\d]+)\/)'
-        match = re.search(pattern, link)
-        if match:
-            target_id = match.group(1)
-            return target_id
-        else:
-            None

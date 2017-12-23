@@ -1,5 +1,7 @@
 """Base Classes for the API."""
 
+from .utils import parse_id, create_relation
+
 
 class Anime:
     """Represents a MAL Anime
@@ -84,17 +86,8 @@ class Anime:
     source : str
         Type of source material. Can be `Manga` `Novel` or `Original`.
 
-    related : dict
-        WIP - May include :attr:`adaptation`, :attr:`prequel` and :attr:`sequel`. Can also be None.
-
-    adaptation : list[dict]
-        WIP - Adaptations of the Anime. May be None.
-
-    sequel : list[dict]
-        WIP - Sequels to the Anime, if any. May be None.
-
-    prequel : list[dict]
-        WIP - Prequels to the Anime, if any. May be None.
+    related : list[:class:`.PartialAnime` or :class:`.PartialManga`]
+        List of related Anime or Manga.
 
     """
 
@@ -133,11 +126,13 @@ class Anime:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
-        self.related = kwargs.pop('related', None)
-        if self.related is not None:
-            self.adaptation = self.related.get("Adaptation", None)
-            self.sequel = self.related.get("Sequel", None)
-            self.prequel = self.related.get("Prequel", None)
+        self.related = []
+        self._raw_related = kwargs.pop('related', None)
+        for relation_type, relations in self._raw_related.items():
+            for relation in relations:
+                relation['relation'] = relation_type
+                obj = create_relation(relation)
+                self.related.append(obj)
 
 
 class Manga:
@@ -211,17 +206,8 @@ class Manga:
     favorites : int
         Amount of favorites given to the Manga.
 
-    related : dict
-        WIP - May include :attr:`adaptation`, :attr:`prequel` and :attr:`sequel`. Can also be None.
-
-    adaptation : list[dict]
-        WIP - Adaptations of the Manga. May be None.
-
-    sequel : list[dict]
-        WIP - Sequels to the Manga, if any. May be None.
-
-    prequel : list[dict]
-        WIP - Prequels to the Manga, if any. May be None.
+    related : list[:class:`.PartialAnime` or :class:`.PartialManga`]
+        List of related Anime or Manga.
 
     """
 
@@ -255,11 +241,13 @@ class Manga:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
-        self.related = kwargs.pop('related', None)  # TODO: SOMETHING.
-        if self.related is not None:
-            self.adaptation = self.related.get("Adaptation", None)
-            self.sequel = self.related.get("Sequel", None)
-            self.prequel = self.related.get("Prequel", None)
+        self.related = []
+        self._raw_related = kwargs.pop('related', None)
+        for relation_type, relations in self._raw_related.items():
+            for relation in relations:
+                relation['relation'] = relation_type
+                obj = create_relation(relation)
+                self.related.append(obj)
 
 
 class Character:

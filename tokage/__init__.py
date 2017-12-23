@@ -14,3 +14,4 @@ Tokage is an async MAL wrapper for Python 3.5+.
 from .client import Client
 from .errors import *
 from .abc import *
+from .partial import PartialAnime, PartialManga, PartialCharacter, PartialPerson
