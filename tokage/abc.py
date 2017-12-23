@@ -1,6 +1,6 @@
 """Base Classes for the API."""
 
-from .partial import PartialAnime, PartialManga
+from .partial import PartialAnime, PartialManga, PartialPerson, PartialCharacter
 from .utils import parse_id, create_relation
 
 
@@ -102,12 +102,14 @@ class Anime:
         self.status = kwargs.pop('status', None)
         self.episodes = kwargs.pop('episodes', None)
         self.airing = kwargs.pop('airing', None)
+
         self._air_time = kwargs.pop('aired_string', None)
         if " to " not in self._air_time:
             self.air_start = self._air_time
             self.air_end = None
         else:
             self.air_start, self.air_end = self._air_time.split(" to ")
+
         self.premiered = kwargs.pop('premiered', None)
         self.broadcast = kwargs.pop('broadcast', None)
         self.synopsis = kwargs.pop('synopsis', None)
@@ -115,10 +117,12 @@ class Anime:
         self.licensors = kwargs.pop('licensor', None)
         self.studios = kwargs.pop('studio', None)
         self.source = kwargs.pop('source', None)
+
         self._raw_genres = kwargs.pop('genre', None)
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
         self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
+
         self.duration = kwargs.pop('duration', None)
         self.link = kwargs.pop('link_canonical', None)
         self.rating = kwargs.pop('rating', None)
@@ -127,6 +131,7 @@ class Anime:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
+
         self.related = []
         self._raw_related = kwargs.pop('related', None)
         for relation_type, relations in self._raw_related.items():
@@ -223,25 +228,32 @@ class Manga:
         self.volumes = kwargs.pop('volumes', None)
         self.chapters = kwargs.pop('chapters', None)
         self.publishing = kwargs.pop('publishing', None)
+        self.synopsis = kwargs.pop('synopsis', None)
+
         self._publish_time = kwargs.pop('published_string', None)
         if " to " not in self._publish_time:
             self.publish_start = self._publish_time
             self.publish_end = None
         else:
             self.publish_start, self.publish_end = self._publish_time.split(" to ")
-        self.synopsis = kwargs.pop('synopsis', None)
-        self.author = kwargs.pop('author', None)[0]["name"]  # TODO: Person
-        self.serialization = kwargs.pop('serialization', None)[0]  # TODO: add serializations
+
+        self._raw_author = kwargs.pop('author', None)[0]
+        self._raw_author['id'] = parse_id(self._raw_author['url'])
+        self.author = PartialPerson.from_author(self._raw_author)
+
         self._raw_genres = kwargs.pop('genre', None)
         if self._raw_genres is None:
             self._raw_genres = kwargs.pop('genres', None)
         self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
+
+        self.serialization = kwargs.pop('serialization', None)[0]  # TODO: add serializations
         self.link = kwargs.pop('link_canonical', None)
         self.score = kwargs.pop('score', None)
         self.rank = kwargs.pop('rank', None)
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
+
         self.related = []
         self._raw_related = kwargs.pop('related', None)
         for relation_type, relations in self._raw_related.items():

@@ -53,9 +53,17 @@ class PartialManga:
 
 
 class PartialPerson:
+    def __init__(self, name, id, url):
+        self.name = name
+        self.id = id
+        self.url = url
+
     @classmethod
-    def from_anime(self):
-        ...
+    def from_author(cls, kwargs):
+        name = kwargs.get('name')
+        id = kwargs.get('id')
+        url = kwargs.get('url')
+        return cls(name, id, url)
 
 
 class PartialCharacter:
