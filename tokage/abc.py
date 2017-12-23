@@ -1,5 +1,6 @@
 """Base Classes for the API."""
 
+from .partial import PartialAnime, PartialManga
 from .utils import parse_id, create_relation
 
 
@@ -270,10 +271,10 @@ class Character:
     favorites : int
         Amount of favorites the Character has.
 
-    animeography : list[dict]
+    animeography : list[:class:`PartialAnime`]
         Anime the Character is featured in.
 
-    mangaography : list[dict]
+    mangaography : list[:class:`PartialManga`]
         Manga the Character is featured in.
 
     japanese_name : str
@@ -293,8 +294,21 @@ class Character:
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image_url', None)
         self.favorites = kwargs.pop('member_favorites', None)
-        self.animeography = kwargs.pop('animeography', None)  # TODO: Handle
-        self.mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
+
+        self.animeography = []
+        self._raw_animeography = kwargs.pop('animeography', None)  # TODO: Handle
+        for anime in self._raw_animeography:
+            anime['id'] = parse_id(anime['url'])
+            obj = PartialAnime.from_character(anime)
+            self.animeography.append(obj)
+
+        self.mangaography = []
+        self._raw_mangaography = kwargs.pop('mangaography', None)  # TODO: Handle
+        for manga in self._raw_mangaography:
+            manga['id'] = parse_id(manga['url'])
+            obj = PartialManga.from_character(manga)
+            self.mangaography.append(obj)
+
         self.japanese_name = kwargs.pop('name_kanji', None)
         self.about = kwargs.pop('about', None)
         self.voice_actors = kwargs.pop('voice_actors', None)  # TODO: Handle

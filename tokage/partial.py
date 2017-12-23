@@ -21,6 +21,13 @@ class PartialAnime:
         relation = kwargs.get('relation')
         return cls(title, id, url, relation)
 
+    @classmethod
+    def from_character(cls, kwargs):
+        title = kwargs.get('name')
+        id = kwargs.get('id')
+        url = kwargs.get('url')
+        return cls(title, id, url)
+
 
 class PartialManga:
     def __init__(self, title, id, url, relation=None):
@@ -36,6 +43,13 @@ class PartialManga:
         url = kwargs.get('url')
         relation = kwargs.get('relation')
         return cls(title, id, url, relation)
+
+    @classmethod
+    def from_character(cls, kwargs):
+        title = kwargs.get('name')
+        id = kwargs.get('id')
+        url = kwargs.get('url')
+        return cls(title, id, url)
 
 
 class PartialPerson:
