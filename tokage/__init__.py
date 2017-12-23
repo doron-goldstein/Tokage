@@ -7,7 +7,10 @@ Tokage is an async MAL wrapper for Python 3.5+.
     :toctree: Tokage
 
     client
-    abc
+    anime
+    manga
+    character
+    person
     errors
 """
 

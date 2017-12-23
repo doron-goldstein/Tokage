@@ -48,8 +48,8 @@ class Manga:
     synopsis : str
         Description of the Manga.
 
-    author : str
-        Name of the Manga author.
+    author : :class:`PartialPerson`
+        PartialPerson instance of the Manga author.
 
     serialization : str
         The Manga's serialization.
