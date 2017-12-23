@@ -26,5 +26,24 @@ Character
 .. autoclass:: Character
 
 Person
-~~~~~~~~~~
+~~~~~~~
 .. autoclass:: Person
+
+Partial Classes
+----------------
+
+PartialAnime
+~~~~~~~~~~~~~
+.. autoclass:: PartialAnime
+
+PartialManga
+~~~~~~~~~~~~~
+.. autoclass:: PartialManga
+    
+PartialCharacter
+~~~~~~~~~~~~~~~~~
+.. autoclass:: PartialCharacter
+
+PartialPerson
+~~~~~~~~~~~~~~
+.. autoclass:: PartialPerson
