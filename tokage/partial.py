@@ -1,11 +1,6 @@
 """Partial Classes"""
 
 
-class Relation:
-    def __init__(self, *args):
-        ...
-
-
 class PartialAnime:
     def __init__(self, title, id, url, relation=None):
         self.title = title

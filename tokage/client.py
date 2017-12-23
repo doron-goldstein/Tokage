@@ -6,7 +6,11 @@ from urllib.parse import parse_qs
 import aiohttp
 from lxml import etree
 
-from .abc import Anime, Character, Manga, Person
+from .anime import Anime
+from .manga import Manga
+from .character import Character
+from .person import Person
+
 from .utils import parse_id
 from .errors import *  # noqa
 
