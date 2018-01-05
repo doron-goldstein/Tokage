@@ -47,21 +47,26 @@ class Character:
         self.name = kwargs.pop('name', None)
         self.image = kwargs.pop('image_url', None)
         self.favorites = kwargs.pop('member_favorites', None)
-
-        self.animeography = []
         self._raw_animeography = kwargs.pop('animeography', None)
-        for anime in self._raw_animeography:
-            anime['id'] = parse_id(anime['url'])
-            obj = PartialAnime.from_character(anime)
-            self.animeography.append(obj)
-
-        self.mangaography = []
         self._raw_mangaography = kwargs.pop('mangaography', None)
-        for manga in self._raw_mangaography:
-            manga['id'] = parse_id(manga['url'])
-            obj = PartialManga.from_character(manga)
-            self.mangaography.append(obj)
-
         self.japanese_name = kwargs.pop('name_kanji', None)
         self.about = kwargs.pop('about', None)
         self.voice_actors = kwargs.pop('voice_actors', None)  # TODO: Handle
+
+    @property
+    def animeography(self):
+        lst = []
+        for anime in self._raw_animeography:
+            anime['id'] = parse_id(anime['url'])
+            obj = PartialAnime.from_character(anime)
+            lst.append(obj)
+        return lst
+
+    @property
+    def mangaography(self):
+        lst = []
+        for manga in self._raw_mangaography:
+            manga['id'] = parse_id(manga['url'])
+            obj = PartialManga.from_character(manga)
+            lst.append(obj)
+        return lst

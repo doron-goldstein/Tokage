@@ -116,12 +116,7 @@ class Anime:
         self.licensors = kwargs.pop('licensor', None)
         self.studios = kwargs.pop('studio', None)
         self.source = kwargs.pop('source', None)
-
-        self._raw_genres = kwargs.pop('genre', None)
-        if self._raw_genres is None:
-            self._raw_genres = kwargs.pop('genres', None)
-        self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
-
+        self._raw_genres = kwargs.pop('genre', None) or kwargs.pop('genres', None)
         self.duration = kwargs.pop('duration', None)
         self.link = kwargs.pop('link_canonical', None)
         self.rating = kwargs.pop('rating', None)
@@ -130,11 +125,18 @@ class Anime:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
-
-        self.related = []
         self._raw_related = kwargs.pop('related', None)
+
+    @property
+    def genres(self):
+        return [g['name'] for g in self._raw_genres] if self._raw_genres else None
+
+    @property
+    def related(self):
+        lst = []
         for relation_type, relations in self._raw_related.items():
             for relation in relations:
                 relation['relation'] = relation_type
                 obj = create_relation(relation)
-                self.related.append(obj)
+                lst.append(obj)
+        return lst

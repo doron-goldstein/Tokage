@@ -101,14 +101,7 @@ class Manga:
             self.publish_start, self.publish_end = self._publish_time.split(" to ")
 
         self._raw_author = kwargs.pop('author', None)[0]
-        self._raw_author['id'] = parse_id(self._raw_author['url'])
-        self.author = PartialPerson.from_author(self._raw_author)
-
-        self._raw_genres = kwargs.pop('genre', None)
-        if self._raw_genres is None:
-            self._raw_genres = kwargs.pop('genres', None)
-        self.genres = [g['name'] for g in self._raw_genres] if self._raw_genres else None
-
+        self._raw_genres = kwargs.pop('genre', None) or kwargs.pop('genres', None)
         self.serialization = kwargs.pop('serialization', None)[0]  # TODO: add serializations
         self.link = kwargs.pop('link_canonical', None)
         self.score = kwargs.pop('score', None)
@@ -116,11 +109,23 @@ class Manga:
         self.popularity = kwargs.pop('popularity', None)
         self.members = kwargs.pop('members', None)
         self.favorites = kwargs.pop('favorites', None)
-
-        self.related = []
         self._raw_related = kwargs.pop('related', None)
+
+    @property
+    def author(self):
+        self._raw_author['id'] = parse_id(self._raw_author['url'])
+        return PartialPerson.from_author(self._raw_author)
+
+    @property
+    def genres(self):
+        return [g['name'] for g in self._raw_genres] if self._raw_genres else None
+
+    @property
+    def related(self):
+        lst = []
         for relation_type, relations in self._raw_related.items():
             for relation in relations:
                 relation['relation'] = relation_type
                 obj = create_relation(relation)
-                self.related.append(obj)
+                lst.append(obj)
+        return lst
