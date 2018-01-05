@@ -97,12 +97,24 @@ class PartialPerson:
 
     url : str
         Link to the Person.
+    
+    language : Optional[str]
+        If this is a partial voice actor, the language of the voice acting.
 
     """
-    def __init__(self, name, id, url):
+    def __init__(self, name, id, url, language=None):
         self.name = name
         self.id = int(id)
         self.url = url
+        self.language = language
+    
+    @classmethod
+    def from_character(cls, kwargs):
+        name = kwargs.get('name')
+        id = int(kwargs.get('id'))
+        url = kwargs.get('url')
+        lang = kwargs.get('language')
+        return cls(name, id, url, lang)
 
     @classmethod
     def from_author(cls, kwargs):

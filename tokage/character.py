@@ -1,7 +1,7 @@
 """Character object"""
 
 from .utils import parse_id
-from .partial import PartialAnime, PartialManga
+from .partial import PartialAnime, PartialManga, PartialPerson
 
 
 class Character:
@@ -36,8 +36,8 @@ class Character:
     about : str
         WIP - Information about the character. As of now, spoilers are unformatted and will appear.
 
-    voice_actors : list[dict]
-        WIP - List of voice actors who played this Character.
+    voice_actors : list[:class:`PartialPerson`]
+        List of voice actors who played this Character.
 
     """
 
@@ -51,7 +51,7 @@ class Character:
         self._raw_mangaography = kwargs.get('mangaography')
         self.japanese_name = kwargs.get('name_kanji')
         self.about = kwargs.get('about')
-        self.voice_actors = kwargs.get('voice_actors')  # TODO: Handle
+        self._raw_voice_actors = kwargs.get('voice_actors') or kwargs.get('voice_actor')
 
     @property
     def animeography(self):
@@ -68,5 +68,14 @@ class Character:
         for manga in self._raw_mangaography:
             manga['id'] = parse_id(manga['url'])
             obj = PartialManga.from_character(manga)
+            lst.append(obj)
+        return lst
+
+    @property
+    def voice_actors(self):
+        lst = []
+        for va in self._raw_voice_actors:
+            va['id'] = parse_id(va['url'])
+            obj = PartialPerson.from_character(va)
             lst.append(obj)
         return lst
