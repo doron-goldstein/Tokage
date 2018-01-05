@@ -3,6 +3,7 @@
 from .partial import PartialAnime, PartialManga
 from .utils import parse_id
 
+
 class Person:
     """Represents a MAL Person (Voice Actors, Staff, etc.)
 
@@ -23,11 +24,11 @@ class Person:
     favorites : int
         Amount of favorites the Person has.
 
-    anime : list[dict]
-        WIP - Staff positions in Anime.
+    anime : list[:class:`PartialAnime`]
+        Staff positions in Anime.
 
-    manga : list[dict]
-        WIP - Published Manga.
+    manga : list[:class:`PartialManga`]
+        Published Manga.
 
     more : str
         Additional info about the Person.
@@ -36,7 +37,7 @@ class Person:
         Link to the Person's website
 
     voice_acting : list[dict]
-        WIP - List of voice acting roles the Person has.
+        WIP - List of characters the Person has voice acted.
 
     """
 
