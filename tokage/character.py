@@ -76,6 +76,6 @@ class Character:
         lst = []
         for va in self._raw_voice_actors:
             va['id'] = parse_id(va['url'])
-            obj = PartialPerson.from_character(va)
+            obj = PartialPerson.from_voice_acting(va)
             lst.append(obj)
         return lst

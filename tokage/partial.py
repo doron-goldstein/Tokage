@@ -56,7 +56,7 @@ class PartialManga:
 
     url : str
         Link to the Manga.
-        
+
     relation : Optional[str]
         relation of the anime to a :class:`Person` or a :class:`Manga`.
 
@@ -97,7 +97,7 @@ class PartialPerson:
 
     url : str
         Link to the Person.
-    
+
     language : Optional[str]
         If this is a partial voice actor, the language of the voice acting.
 
@@ -107,9 +107,9 @@ class PartialPerson:
         self.id = int(id)
         self.url = url
         self.language = language
-    
+
     @classmethod
-    def from_character(cls, kwargs):
+    def from_voice_acting(cls, kwargs):
         name = kwargs.get('name')
         id = int(kwargs.get('id'))
         url = kwargs.get('url')
@@ -125,4 +125,33 @@ class PartialPerson:
 
 
 class PartialCharacter:
-    ...
+    """Represents a part of a Character object
+
+    Attributes
+    ----------
+
+    name : str
+        The Character's name.
+
+    id : int
+        The Character's ID.
+
+    url : str
+        Link to the Character.
+
+    anime : :class:`PartialAnime`
+        The anime this character is from.
+
+    """
+    def __init__(self, name, id, url, anime):
+        self.name = name
+        self.id = int(id)
+        self.url = url
+        self.anime = anime
+
+    @classmethod
+    def from_person(cls, kwargs, anime):
+        name = kwargs.get('name')
+        id = int(kwargs.get('id'))
+        url = kwargs.get('url')
+        return cls(name, id, url, anime)

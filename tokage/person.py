@@ -1,6 +1,6 @@
 """Person object"""
 
-from .partial import PartialAnime, PartialManga
+from .partial import PartialAnime, PartialManga, PartialCharacter
 from .utils import parse_id
 
 
@@ -47,12 +47,25 @@ class Person:
         self.name = kwargs.get('name')
         self.image = kwargs.get('image_url')
         self.favorites = kwargs.get('member_favorites')
-        self._raw_anime = kwargs.get('anime_staff_position')
-        self._raw_manga = kwargs.get('published_manga')
         self.birthday = kwargs.get('birthday')
         self.more = kwargs.get('more')
         self.website = kwargs.get('website')
-        self.voice_acting = kwargs.get('voice_acting_role')  # TODO: Handle
+        self._raw_anime = kwargs.get('anime_staff_position')
+        self._raw_manga = kwargs.get('published_manga')
+        self._raw_voice_acting = kwargs.get('voice_acting_role')
+
+    @property
+    def voice_acting(self):
+        lst = []
+        for va in self._raw_voice_acting:
+            char = va['character']
+            char['id'] = parse_id(char['url'])
+            anime = va['anime']
+            anime['id'] = parse_id(anime['url'])
+            anime_obj = PartialAnime.from_character(anime)
+            obj = PartialCharacter.from_person(char, anime_obj)
+            lst.append(obj)
+        return lst
 
     @property
     def anime(self):
