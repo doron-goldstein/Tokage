@@ -16,6 +16,9 @@ class PartialAnime:
     url : str
         Link to the Anime.
 
+    relation : Optional[str]
+        relation of the anime to a :class:`Person` or an :class:`Anime`.
+
     """
     def __init__(self, title, id, url, relation=None):
         self.title = title
@@ -53,6 +56,9 @@ class PartialManga:
 
     url : str
         Link to the Manga.
+        
+    relation : Optional[str]
+        relation of the anime to a :class:`Person` or a :class:`Manga`.
 
     """
     def __init__(self, title, id, url, relation=None):
