@@ -36,8 +36,8 @@ class Person:
     website : str
         Link to the Person's website
 
-    voice_acting : list[dict]
-        WIP - List of characters the Person has voice acted.
+    voice_acting : list[:class:`PartialCharacter`]
+        List of characters the Person has voice acted.
 
     """
 
