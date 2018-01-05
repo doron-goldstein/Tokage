@@ -2,12 +2,12 @@
 Tokage
 ======
 
-Tokage is an async wrapper for the `MAL <https://myanimelist.net/>`_ API.
+Tokage is an async wrapper for the `MyAnimeList <https://myanimelist.net/>`_ API.
 This wrapper is compatible with Python 3.5+ and uses `Jikan <http://jikan.me/>`_ as an alternative to the default MAL API.
 
 Documentation can be found `here <http://tokage.readthedocs.io/en/latest/index.html>`_.
 
-This wrapper is aimed at ease of use and an object-oriented style.
+This wrapper is aimed at ease of use and an object-oriented style, and does not require your account credentials.
 
 Example
 -------
