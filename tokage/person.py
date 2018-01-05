@@ -1,5 +1,7 @@
 """Person object"""
 
+from .partial import PartialAnime, PartialManga
+from .utils import parse_id
 
 class Person:
     """Represents a MAL Person (Voice Actors, Staff, etc.)
@@ -44,9 +46,33 @@ class Person:
         self.name = kwargs.get('name')
         self.image = kwargs.get('image_url')
         self.favorites = kwargs.get('member_favorites')
-        self.anime = kwargs.get('anime_staff_position')  # TODO: Handle
-        self.manga = kwargs.get('published_manga')  # TODO: Handle
+        self._raw_anime = kwargs.get('anime_staff_position')
+        self._raw_manga = kwargs.get('published_manga')
         self.birthday = kwargs.get('birthday')
         self.more = kwargs.get('more')
         self.website = kwargs.get('website')
         self.voice_acting = kwargs.get('voice_acting_role')  # TODO: Handle
+
+    @property
+    def anime(self):
+        lst = []
+        for position in self._raw_anime:
+            anime = position['anime']
+            anime['mal_id'] = parse_id(anime['url'])
+            anime['relation'] = position['role']
+            anime['title'] = anime.pop('name')
+            obj = PartialAnime.from_related(anime)
+            lst.append(obj)
+        return lst
+
+    @property
+    def manga(self):
+        lst = []
+        for position in self._raw_manga:
+            manga = position['manga']
+            manga['mal_id'] = parse_id(manga['url'])
+            manga['relation'] = position['role']
+            manga['title'] = manga.pop('name')
+            obj = PartialManga.from_related(manga)
+            lst.append(obj)
+        return lst
