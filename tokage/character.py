@@ -43,15 +43,15 @@ class Character:
 
     def __init__(self, char_id, **kwargs):
         self.id = char_id
-        self.link = kwargs.pop('link_canonical', None)
-        self.name = kwargs.pop('name', None)
-        self.image = kwargs.pop('image_url', None)
-        self.favorites = kwargs.pop('member_favorites', None)
-        self._raw_animeography = kwargs.pop('animeography', None)
-        self._raw_mangaography = kwargs.pop('mangaography', None)
-        self.japanese_name = kwargs.pop('name_kanji', None)
-        self.about = kwargs.pop('about', None)
-        self.voice_actors = kwargs.pop('voice_actors', None)  # TODO: Handle
+        self.link = kwargs.get('link_canonical')
+        self.name = kwargs.get('name')
+        self.image = kwargs.get('image_url')
+        self.favorites = kwargs.get('member_favorites')
+        self._raw_animeography = kwargs.get('animeography')
+        self._raw_mangaography = kwargs.get('mangaography')
+        self.japanese_name = kwargs.get('name_kanji')
+        self.about = kwargs.get('about')
+        self.voice_actors = kwargs.get('voice_actors')  # TODO: Handle
 
     @property
     def animeography(self):
