@@ -41,17 +41,17 @@ class Character:
 
     """
 
-    def __init__(self, char_id, **kwargs):
+    def __init__(self, char_id, data):
         self.id = char_id
-        self.link = kwargs.get('link_canonical')
-        self.name = kwargs.get('name')
-        self.image = kwargs.get('image_url')
-        self.favorites = kwargs.get('member_favorites')
-        self._raw_animeography = kwargs.get('animeography')
-        self._raw_mangaography = kwargs.get('mangaography')
-        self.japanese_name = kwargs.get('name_kanji')
-        self.about = kwargs.get('about')
-        self._raw_voice_actors = kwargs.get('voice_actors') or kwargs.get('voice_actor')
+        self.link = data.get('link_canonical')
+        self.name = data.get('name')
+        self.image = data.get('image_url')
+        self.favorites = data.get('member_favorites')
+        self._raw_animeography = data.get('animeography')
+        self._raw_mangaography = data.get('mangaography')
+        self.japanese_name = data.get('name_kanji')
+        self.about = data.get('about')
+        self._raw_voice_actors = data.get('voice_actors') or data.get('voice_actor')
 
     @property
     def animeography(self):

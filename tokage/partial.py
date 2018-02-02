@@ -1,5 +1,7 @@
 """Partial Classes"""
 
+from .utils import parse_id
+
 
 class PartialAnime:
     """Represents a part of an Anime object
@@ -27,18 +29,18 @@ class PartialAnime:
         self.relation = relation
 
     @classmethod
-    def from_related(cls, kwargs):
-        title = kwargs.get('title')
-        id = int(kwargs.get('mal_id'))
-        url = kwargs.get('url')
-        relation = kwargs.get('relation')
+    def from_related(cls, data):
+        title = data.get('title')
+        id = int(data.get('mal_id'))
+        url = data.get('url')
+        relation = data.get('relation')
         return cls(title, id, url, relation)
 
     @classmethod
-    def from_character(cls, kwargs):
-        title = kwargs.get('name')
-        id = int(kwargs.get('id'))
-        url = kwargs.get('url')
+    def from_character(cls, data):
+        title = data.get('name')
+        id = int(data.get('id'))
+        url = data.get('url')
         return cls(title, id, url)
 
 
@@ -58,7 +60,7 @@ class PartialManga:
         Link to the Manga.
 
     relation : Optional[str]
-        relation of the anime to a :class:`Person` or a :class:`Manga`.
+        relation of the manga to a :class:`Person` or a :class:`Manga`.
 
     """
     def __init__(self, title, id, url, relation=None):
@@ -68,18 +70,18 @@ class PartialManga:
         self.relation = relation
 
     @classmethod
-    def from_related(cls, kwargs):
-        title = kwargs.get('title')
-        id = int(kwargs.get('mal_id'))
-        url = kwargs.get('url')
-        relation = kwargs.get('relation')
+    def from_related(cls, data):
+        title = data.get('title')
+        id = int(data.get('mal_id'))
+        url = data.get('url')
+        relation = data.get('relation')
         return cls(title, id, url, relation)
 
     @classmethod
-    def from_character(cls, kwargs):
-        title = kwargs.get('name')
-        id = int(kwargs.get('id'))
-        url = kwargs.get('url')
+    def from_character(cls, data):
+        title = data.get('name')
+        id = int(data.get('id'))
+        url = data.get('url')
         return cls(title, id, url)
 
 
@@ -109,18 +111,18 @@ class PartialPerson:
         self.language = language
 
     @classmethod
-    def from_voice_acting(cls, kwargs):
-        name = kwargs.get('name')
-        id = int(kwargs.get('id'))
-        url = kwargs.get('url')
-        lang = kwargs.get('language')
+    def from_voice_acting(cls, data):
+        name = data.get('name')
+        id = int(data.get('id'))
+        url = data.get('url')
+        lang = data.get('language')
         return cls(name, id, url, lang)
 
     @classmethod
-    def from_author(cls, kwargs):
-        name = kwargs.get('name')
-        id = int(kwargs.get('id'))
-        url = kwargs.get('url')
+    def from_author(cls, data):
+        name = data.get('name')
+        id = int(data.get('id'))
+        url = data.get('url')
         return cls(name, id, url)
 
 
@@ -139,19 +141,27 @@ class PartialCharacter:
     url : str
         Link to the Character.
 
-    anime : :class:`PartialAnime`
+    anime : Optional[:class:`PartialAnime`]
         The anime this character is from.
 
     """
-    def __init__(self, name, id, url, anime):
+    def __init__(self, name, id, url, anime=None):
         self.name = name
         self.id = int(id)
         self.url = url
         self.anime = anime
 
     @classmethod
-    def from_person(cls, kwargs, anime):
-        name = kwargs.get('name')
-        id = int(kwargs.get('id'))
-        url = kwargs.get('url')
+    def from_person(cls, data, anime):
+        name = data.get('name')
+        id = int(data.get('id'))
+        url = data.get('url')
         return cls(name, id, url, anime)
+
+    @classmethod
+    def from_search(cls, data):
+        name = data['name']
+        url = data['url']
+        id = parse_id(url)
+        return cls(name, id, url)
+

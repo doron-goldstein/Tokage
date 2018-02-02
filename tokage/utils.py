@@ -4,11 +4,11 @@ import re
 from .partial import PartialAnime, PartialCharacter, PartialManga, PartialPerson
 
 
-def create_relation(kwargs):
-    if kwargs.get('type') == "anime":
-        return PartialAnime.from_related(kwargs)
+def create_relation(data):
+    if data.get('type') == "anime":
+        return PartialAnime.from_related(data)
     else:
-        return PartialManga.from_related(kwargs)
+        return PartialManga.from_related(data)
 
 
 def parse_id(link):

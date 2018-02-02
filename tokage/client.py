@@ -7,18 +7,19 @@ import aiohttp
 from lxml import etree
 
 from .anime import Anime
-from .manga import Manga
 from .character import Character
-from .person import Person
-
-from .utils import parse_id
 from .errors import *  # noqa
+from .manga import Manga
+from .person import Person
+from .utils import parse_id
+from .partial import *  # noqa
 
 BASE_URL = 'https://api.jikan.me/'
 ANIME_URL = BASE_URL + 'anime/'
 MANGA_URL = BASE_URL + 'manga/'
 PERSON_URL = BASE_URL + 'person/'
 CHARACTER_URL = BASE_URL + 'character/'
+SEARCH_URL = BASE_URL + 'search/'
 
 
 class Client:
@@ -81,10 +82,10 @@ class Client:
 
         Raises a :class:`AnimeNotFound` Error if an Anime was not found corresponding to the ID.
         """
-        response_json = await self.request(ANIME_URL + str(target_id))
-        if response_json is None:
+        resp = await self.request(ANIME_URL + str(target_id))
+        if resp is None:
             raise AnimeNotFound("Anime with the given ID was not found")
-        result = Anime(target_id, **response_json)
+        result = Anime(target_id, resp)
         return result
 
     async def get_manga(self, target_id):
@@ -92,10 +93,10 @@ class Client:
 
         Raises a :class:`MangaNotFound` Error if a Manga was not found corresponding to the ID.
         """
-        response_json = await self.request(MANGA_URL + str(target_id))
-        if response_json is None:
+        resp = await self.request(MANGA_URL + str(target_id))
+        if resp is None:
             raise MangaNotFound("Manga with the given ID was not found")
-        result = Manga(target_id, **response_json)
+        result = Manga(target_id, resp)
         return result
 
     async def get_character(self, target_id):
@@ -103,10 +104,10 @@ class Client:
 
         Raises a :class:`CharacterNotFound` Error if a Character was not found corresponding to the ID.
         """
-        response_json = await self.request(CHARACTER_URL + str(target_id))
-        if response_json is None:
+        resp = await self.request(CHARACTER_URL + str(target_id))
+        if resp is None:
             raise CharacterNotFound("Character with the given ID was not found")
-        result = Character(target_id, **response_json)
+        result = Character(target_id, resp)
         return result
 
     async def get_person(self, target_id):
@@ -114,13 +115,53 @@ class Client:
 
         Raises a :class:`PersonNotFound` Error if a Person was not found corresponding to the ID.
         """
-        response_json = await self.request(PERSON_URL + str(target_id))
-        if response_json is None:
+        resp = await self.request(PERSON_URL + str(target_id))
+        if resp is None:
             raise PersonNotFound("Person with the given ID was not found")
-        result = Person(target_id, **response_json)
+        result = Person(target_id, resp)
         return result
 
-    async def search_id(self, type_, query: str):
+    async def search_anime(self, query):
+        """Search for :class:`PartialAnime` by query.
+        
+        Returns a list of results.
+        """
+        resp = await self.request(SEARCH_URL + "anime/" + query)
+        if resp is None or not resp['result']:
+            raise AnimeNotFound("Anime `{}` could not be found".format(query))
+        return [PartialAnime(a['title'], a['id'], a['url']) for a in resp['result']]
+    
+    async def search_manga(self, query):
+        """Search for :class:`PartialManga` by query.
+        
+        Returns a list of results.
+        """
+        resp = await self.request(SEARCH_URL + "manga/" + query)
+        if resp is None or not resp['result']:
+            raise MangaNotFound("Manga `{}` could not be found".format(query))
+        return [PartialManga(m['title'], m['id'], m['url']) for m in resp['result']]
+    
+    async def search_character(self, query):
+        """Search for :class:`PartialCharacter` by query.
+        
+        Returns a list of results.
+        """
+        resp = await self.request(SEARCH_URL + "character/" + query)
+        if resp is None or not resp['result']:
+            raise CharacterNotFound("Character `{}` could not be found".format(query))
+        return [PartialCharacter.from_search(c) for c in resp['result']]
+    
+    async def search_person(self, query):
+        """Search for :class:`PartialPerson` by query.
+        
+        Returns a list of results.
+        """
+        resp = await self.request(SEARCH_URL + "person/" + query)
+        if resp is None or not resp['result']:
+            raise PersonNotFound("Person `{}` could not be found".format(query))
+        return [PartialPerson(p['name'], p['id'], p['url']) for p in resp['result']]
+
+    async def search_id(self, type_, query):
         """Parse a google query and return the ID.
 
         Raises a :class:`TokageNotFound` Error if an ID was not found.

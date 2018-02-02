@@ -41,18 +41,18 @@ class Person:
 
     """
 
-    def __init__(self, person_id, **kwargs):
+    def __init__(self, person_id, data):
         self.id = person_id
-        self.link = kwargs.get('link_canonical')
-        self.name = kwargs.get('name')
-        self.image = kwargs.get('image_url')
-        self.favorites = kwargs.get('member_favorites')
-        self.birthday = kwargs.get('birthday')
-        self.more = kwargs.get('more')
-        self.website = kwargs.get('website')
-        self._raw_anime = kwargs.get('anime_staff_position')
-        self._raw_manga = kwargs.get('published_manga')
-        self._raw_voice_acting = kwargs.get('voice_acting_role')
+        self.link = data.get('link_canonical')
+        self.name = data.get('name')
+        self.image = data.get('image_url')
+        self.favorites = data.get('member_favorites')
+        self.birthday = data.get('birthday')
+        self.more = data.get('more')
+        self.website = data.get('website')
+        self._raw_anime = data.get('anime_staff_position')
+        self._raw_manga = data.get('published_manga')
+        self._raw_voice_acting = data.get('voice_acting_role')
 
     @property
     def voice_acting(self):

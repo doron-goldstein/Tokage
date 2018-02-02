@@ -80,36 +80,36 @@ class Manga:
 
     """
 
-    def __init__(self, manga_id, **kwargs):
+    def __init__(self, manga_id, data):
         self.id = manga_id
-        self.title = kwargs.get('title')
-        self.type = kwargs.get('type')
-        self.synonyms = kwargs.get('title_synonyms')
-        self.image = kwargs.get('image_url')
-        self.japanese_title = kwargs.get('title_japanese')
-        self.status = kwargs.get('status')
-        self.volumes = kwargs.get('volumes')
-        self.chapters = kwargs.get('chapters')
-        self.publishing = kwargs.get('publishing')
-        self.synopsis = kwargs.get('synopsis')
+        self.title = data.get('title')
+        self.type = data.get('type')
+        self.synonyms = data.get('title_synonyms')
+        self.image = data.get('image_url')
+        self.japanese_title = data.get('title_japanese')
+        self.status = data.get('status')
+        self.volumes = data.get('volumes')
+        self.chapters = data.get('chapters')
+        self.publishing = data.get('publishing')
+        self.synopsis = data.get('synopsis')
 
-        self._publish_time = kwargs.get('published_string')
+        self._publish_time = data.get('published_string')
         if " to " not in self._publish_time:
             self.publish_start = self._publish_time
             self.publish_end = None
         else:
             self.publish_start, self.publish_end = self._publish_time.split(" to ")
 
-        self._raw_author = kwargs.get('author')[0]
-        self._raw_genres = kwargs.get('genre') or kwargs.get('genres')
-        self.serialization = kwargs.get('serialization')[0]  # TODO: add serializations
-        self.link = kwargs.get('link_canonical')
-        self.score = kwargs.get('score')
-        self.rank = kwargs.get('rank')
-        self.popularity = kwargs.get('popularity')
-        self.members = kwargs.get('members')
-        self.favorites = kwargs.get('favorites')
-        self._raw_related = kwargs.get('related')
+        self._raw_author = data.get('author')[0]
+        self._raw_genres = data.get('genre') or data.get('genres')
+        self.serialization = data.get('serialization')[0]  # TODO: add serializations
+        self.link = data.get('link_canonical')
+        self.score = data.get('score')
+        self.rank = data.get('rank')
+        self.popularity = data.get('popularity')
+        self.members = data.get('members')
+        self.favorites = data.get('favorites')
+        self._raw_related = data.get('related')
 
     @property
     def author(self):

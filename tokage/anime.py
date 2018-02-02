@@ -91,41 +91,41 @@ class Anime:
 
     """
 
-    def __init__(self, anime_id, **kwargs):
+    def __init__(self, anime_id, data):
         self.id = anime_id
-        self.title = kwargs.get('title')
-        self.type = kwargs.get('type')
-        self.synonyms = kwargs.get('title_synonyms')
-        self.image = kwargs.get('image_url')
-        self.japanese_title = kwargs.get('title_japanese')
-        self.status = kwargs.get('status')
-        self.episodes = kwargs.get('episodes')
-        self.airing = kwargs.get('airing')
+        self.title = data.get('title')
+        self.type = data.get('type')
+        self.synonyms = data.get('title_synonyms')
+        self.image = data.get('image_url')
+        self.japanese_title = data.get('title_japanese')
+        self.status = data.get('status')
+        self.episodes = data.get('episodes')
+        self.airing = data.get('airing')
 
-        self._air_time = kwargs.get('aired_string')
+        self._air_time = data.get('aired_string')
         if " to " not in self._air_time:
             self.air_start = self._air_time
             self.air_end = None
         else:
             self.air_start, self.air_end = self._air_time.split(" to ")
 
-        self.premiered = kwargs.get('premiered')
-        self.broadcast = kwargs.get('broadcast')
-        self.synopsis = kwargs.get('synopsis')
-        self.producers = kwargs.get('producer')
-        self.licensors = kwargs.get('licensor')
-        self.studios = kwargs.get('studio')
-        self.source = kwargs.get('source')
-        self._raw_genres = kwargs.get('genre') or kwargs.get('genres')
-        self.duration = kwargs.get('duration')
-        self.link = kwargs.get('link_canonical')
-        self.rating = kwargs.get('rating')
-        self.score = kwargs.get('score')
-        self.rank = kwargs.get('rank')
-        self.popularity = kwargs.get('popularity')
-        self.members = kwargs.get('members')
-        self.favorites = kwargs.get('favorites')
-        self._raw_related = kwargs.get('related')
+        self.premiered = data.get('premiered')
+        self.broadcast = data.get('broadcast')
+        self.synopsis = data.get('synopsis')
+        self.producers = data.get('producer')
+        self.licensors = data.get('licensor')
+        self.studios = data.get('studio')
+        self.source = data.get('source')
+        self._raw_genres = data.get('genre') or data.get('genres')
+        self.duration = data.get('duration')
+        self.link = data.get('link_canonical')
+        self.rating = data.get('rating')
+        self.score = data.get('score')
+        self.rank = data.get('rank')
+        self.popularity = data.get('popularity')
+        self.members = data.get('members')
+        self.favorites = data.get('favorites')
+        self._raw_related = data.get('related')
 
     @property
     def genres(self):
