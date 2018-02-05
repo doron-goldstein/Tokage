@@ -1,7 +1,7 @@
 """Character object"""
 
-from .utils import parse_id
-from .partial import PartialAnime, PartialManga, PartialPerson
+from tokage.utils import parse_id
+from tokage.partial import PartialAnime, PartialManga, PartialPerson
 
 
 class Character:

@@ -6,13 +6,13 @@ from urllib.parse import parse_qs
 import aiohttp
 from lxml import etree
 
-from .anime import Anime
-from .character import Character
-from .errors import *  # noqa
-from .manga import Manga
-from .person import Person
-from .utils import parse_id
-from .partial import *  # noqa
+from tokage.anime import Anime
+from tokage.character import Character
+from tokage.errors import *  # noqa
+from tokage.manga import Manga
+from tokage.person import Person
+from tokage.utils import parse_id
+from tokage.partial import *  # noqa
 
 BASE_URL = 'https://api.jikan.me/'
 ANIME_URL = BASE_URL + 'anime/'

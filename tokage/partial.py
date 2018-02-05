@@ -1,6 +1,6 @@
 """Partial Classes"""
 
-from .utils import parse_id
+import tokage
 
 
 class PartialAnime:
@@ -162,6 +162,6 @@ class PartialCharacter:
     def from_search(cls, data):
         name = data['name']
         url = data['url']
-        id = parse_id(url)
+        id = tokage.utils.parse_id(url)
         return cls(name, id, url)
 

@@ -1,6 +1,6 @@
 """Anime object"""
 
-from .utils import create_relation
+from tokage.utils import create_relation
 
 
 class Anime:

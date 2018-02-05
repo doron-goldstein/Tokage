@@ -1,7 +1,7 @@
 """Utilities for the library"""
 
 import re
-from .partial import PartialAnime, PartialCharacter, PartialManga, PartialPerson
+from tokage.partial import PartialAnime, PartialCharacter, PartialManga, PartialPerson
 
 
 def create_relation(data):

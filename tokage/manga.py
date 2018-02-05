@@ -1,7 +1,7 @@
 """Manga object"""
 
-from .utils import create_relation, parse_id
-from .partial import PartialPerson
+from tokage.utils import create_relation, parse_id
+from tokage.partial import PartialPerson
 
 
 class Manga:
