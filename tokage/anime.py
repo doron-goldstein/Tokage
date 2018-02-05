@@ -1,9 +1,10 @@
 """Anime object"""
 
+import tokage
 from tokage.utils import create_relation
 
 
-class Anime:
+class Anime(tokage.TokageBase):
     """Represents a MAL Anime
 
     Attributes
@@ -91,7 +92,7 @@ class Anime:
 
     """
 
-    def __init__(self, anime_id, data):
+    def __init__(self, anime_id, data, **kwargs):
         self.id = anime_id
         self.title = data.get('title')
         self.type = data.get('type')
@@ -126,6 +127,7 @@ class Anime:
         self.members = data.get('members')
         self.favorites = data.get('favorites')
         self._raw_related = data.get('related')
+        super().__init__(state=kwargs.get("state"))
 
     @property
     def genres(self):
@@ -137,6 +139,6 @@ class Anime:
         for relation_type, relations in self._raw_related.items():
             for relation in relations:
                 relation['relation'] = relation_type
-                obj = create_relation(relation)
+                obj = create_relation(relation, self._state)
                 lst.append(obj)
         return lst

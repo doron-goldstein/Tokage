@@ -3,7 +3,18 @@
 import tokage
 
 
-class PartialAnime:
+class BasePartial:
+    def __init__(self, *args, **kwargs):
+        self.__id = kwargs.get("id")
+        self.__type = self.__class__.__name__.split("Partial")[1].lower()
+        self.__state = kwargs.get("state")
+
+    async def request_full(self):
+        """Request an instance of the full, non-partial class. For example, :class:`PartialAnime` -> :class:`Anime`"""
+        return await getattr(self.__state, "get_" + self.__type)(self.__id)
+
+
+class PartialAnime(BasePartial):
     """Represents a part of an Anime object
 
     Attributes
@@ -22,29 +33,30 @@ class PartialAnime:
         relation of the anime to a :class:`Person` or an :class:`Anime`.
 
     """
-    def __init__(self, title, id, url, relation=None):
+    def __init__(self, title, id, url, **kwargs):
         self.title = title
         self.id = int(id)
         self.url = url
-        self.relation = relation
+        self.relation = kwargs.get("relation")
+        super().__init__(id=id, state=kwargs.get("state"))
 
     @classmethod
-    def from_related(cls, data):
+    def from_related(cls, data, **kwargs):
         title = data.get('title')
         id = int(data.get('mal_id'))
         url = data.get('url')
         relation = data.get('relation')
-        return cls(title, id, url, relation)
+        return cls(title, id, url, relation=relation, state=kwargs.get("state"))
 
     @classmethod
-    def from_character(cls, data):
+    def from_character(cls, data, **kwargs):
         title = data.get('name')
         id = int(data.get('id'))
         url = data.get('url')
-        return cls(title, id, url)
+        return cls(title, id, url, state=kwargs.get("state"))
 
 
-class PartialManga:
+class PartialManga(BasePartial):
     """Represents a part of a Manga object
 
     Attributes
@@ -63,29 +75,30 @@ class PartialManga:
         relation of the manga to a :class:`Person` or a :class:`Manga`.
 
     """
-    def __init__(self, title, id, url, relation=None):
+    def __init__(self, title, id, url, **kwargs):
         self.title = title
         self.id = int(id)
         self.url = url
-        self.relation = relation
+        self.relation = kwargs.get("relation")
+        super().__init__(id=id, state=kwargs.get("state"))
 
     @classmethod
-    def from_related(cls, data):
+    def from_related(cls, data, **kwargs):
         title = data.get('title')
         id = int(data.get('mal_id'))
         url = data.get('url')
         relation = data.get('relation')
-        return cls(title, id, url, relation)
+        return cls(title, id, url, relation=relation, state=kwargs.get("state"))
 
     @classmethod
-    def from_character(cls, data):
+    def from_character(cls, data, **kwargs):
         title = data.get('name')
         id = int(data.get('id'))
         url = data.get('url')
-        return cls(title, id, url)
+        return cls(title, id, url, state=kwargs.get("state"))
 
 
-class PartialPerson:
+class PartialPerson(BasePartial):
     """Represents a part of a Person object
 
     Attributes
@@ -104,29 +117,30 @@ class PartialPerson:
         If this is a partial voice actor, the language of the voice acting.
 
     """
-    def __init__(self, name, id, url, language=None):
+    def __init__(self, name, id, url, **kwargs):
         self.name = name
         self.id = int(id)
         self.url = url
-        self.language = language
+        self.language = kwargs.get("language")
+        super().__init__(id=id, state=kwargs.get("state"))
 
     @classmethod
-    def from_voice_acting(cls, data):
+    def from_voice_acting(cls, data, **kwargs):
         name = data.get('name')
         id = int(data.get('id'))
         url = data.get('url')
         lang = data.get('language')
-        return cls(name, id, url, lang)
+        return cls(name, id, url, language=lang, state=kwargs.get("state"))
 
     @classmethod
-    def from_author(cls, data):
+    def from_author(cls, data, **kwargs):
         name = data.get('name')
         id = int(data.get('id'))
         url = data.get('url')
-        return cls(name, id, url)
+        return cls(name, id, url, state=kwargs.get("state"))
 
 
-class PartialCharacter:
+class PartialCharacter(BasePartial):
     """Represents a part of a Character object
 
     Attributes
@@ -145,23 +159,23 @@ class PartialCharacter:
         The anime this character is from.
 
     """
-    def __init__(self, name, id, url, anime=None):
+    def __init__(self, name, id, url, **kwargs):
         self.name = name
         self.id = int(id)
         self.url = url
-        self.anime = anime
+        self.anime = kwargs.get("anime")
+        super().__init__(id=id, state=kwargs.get("state"))
 
     @classmethod
-    def from_person(cls, data, anime):
+    def from_person(cls, data, anime, **kwargs):
         name = data.get('name')
         id = int(data.get('id'))
         url = data.get('url')
-        return cls(name, id, url, anime)
+        return cls(name, id, url, anime=anime, state=kwargs.get("state"))
 
     @classmethod
-    def from_search(cls, data):
+    def from_search(cls, data, **kwargs):
         name = data['name']
         url = data['url']
         id = tokage.utils.parse_id(url)
-        return cls(name, id, url)
-
+        return cls(name, id, url, state=kwargs.get("state"))

@@ -1,10 +1,11 @@
 """Character object"""
 
-from tokage.utils import parse_id
+import tokage
 from tokage.partial import PartialAnime, PartialManga, PartialPerson
+from tokage.utils import parse_id
 
 
-class Character:
+class Character(tokage.TokageBase):
     """Represents a MAL Character
 
     Attributes
@@ -41,7 +42,7 @@ class Character:
 
     """
 
-    def __init__(self, char_id, data):
+    def __init__(self, char_id, data, **kwargs):
         self.id = char_id
         self.link = data.get('link_canonical')
         self.name = data.get('name')
@@ -52,13 +53,15 @@ class Character:
         self.japanese_name = data.get('name_kanji')
         self.about = data.get('about')
         self._raw_voice_actors = data.get('voice_actors') or data.get('voice_actor')
+        super().__init__(state=kwargs.get("state"))
+        print(self._state)
 
     @property
     def animeography(self):
         lst = []
         for anime in self._raw_animeography:
             anime['id'] = parse_id(anime['url'])
-            obj = PartialAnime.from_character(anime)
+            obj = PartialAnime.from_character(anime, state=self._state)
             lst.append(obj)
         return lst
 
@@ -67,7 +70,7 @@ class Character:
         lst = []
         for manga in self._raw_mangaography:
             manga['id'] = parse_id(manga['url'])
-            obj = PartialManga.from_character(manga)
+            obj = PartialManga.from_character(manga, state=self._state)
             lst.append(obj)
         return lst
 
@@ -76,6 +79,6 @@ class Character:
         lst = []
         for va in self._raw_voice_actors:
             va['id'] = parse_id(va['url'])
-            obj = PartialPerson.from_voice_acting(va)
+            obj = PartialPerson.from_voice_acting(va, state=self._state)
             lst.append(obj)
         return lst

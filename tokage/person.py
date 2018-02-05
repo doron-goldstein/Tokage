@@ -1,10 +1,11 @@
 """Person object"""
 
-from tokage.partial import PartialAnime, PartialManga, PartialCharacter
+import tokage
+from tokage.partial import PartialAnime, PartialCharacter, PartialManga
 from tokage.utils import parse_id
 
 
-class Person:
+class Person(tokage.TokageBase):
     """Represents a MAL Person (Voice Actors, Staff, etc.)
 
     Attributes
@@ -41,7 +42,7 @@ class Person:
 
     """
 
-    def __init__(self, person_id, data):
+    def __init__(self, person_id, data, **kwargs):
         self.id = person_id
         self.link = data.get('link_canonical')
         self.name = data.get('name')
@@ -53,6 +54,7 @@ class Person:
         self._raw_anime = data.get('anime_staff_position')
         self._raw_manga = data.get('published_manga')
         self._raw_voice_acting = data.get('voice_acting_role')
+        super().__init__(state=kwargs.get("state"))
 
     @property
     def voice_acting(self):
@@ -62,8 +64,8 @@ class Person:
             char['id'] = parse_id(char['url'])
             anime = va['anime']
             anime['id'] = parse_id(anime['url'])
-            anime_obj = PartialAnime.from_character(anime)
-            obj = PartialCharacter.from_person(char, anime_obj)
+            anime_obj = PartialAnime.from_character(anime, state=self._state)
+            obj = PartialCharacter.from_person(char, anime_obj, state=self._state)
             lst.append(obj)
         return lst
 
@@ -75,7 +77,7 @@ class Person:
             anime['mal_id'] = parse_id(anime['url'])
             anime['relation'] = position['role']
             anime['title'] = anime.pop('name')
-            obj = PartialAnime.from_related(anime)
+            obj = PartialAnime.from_related(anime, state=self._state)
             lst.append(obj)
         return lst
 
@@ -87,6 +89,6 @@ class Person:
             manga['mal_id'] = parse_id(manga['url'])
             manga['relation'] = position['role']
             manga['title'] = manga.pop('name')
-            obj = PartialManga.from_related(manga)
+            obj = PartialManga.from_related(manga, state=self._state)
             lst.append(obj)
         return lst

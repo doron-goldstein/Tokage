@@ -1,10 +1,11 @@
 """Manga object"""
 
-from tokage.utils import create_relation, parse_id
+import tokage
 from tokage.partial import PartialPerson
+from tokage.utils import create_relation, parse_id
 
 
-class Manga:
+class Manga(tokage.TokageBase):
     """Represents a MAL Manga (Includes Novels)
 
     Attributes
@@ -80,7 +81,7 @@ class Manga:
 
     """
 
-    def __init__(self, manga_id, data):
+    def __init__(self, manga_id, data, **kwargs):
         self.id = manga_id
         self.title = data.get('title')
         self.type = data.get('type')
@@ -110,11 +111,12 @@ class Manga:
         self.members = data.get('members')
         self.favorites = data.get('favorites')
         self._raw_related = data.get('related')
+        super().__init__(state=kwargs.get("state"))
 
     @property
     def author(self):
         self._raw_author['id'] = parse_id(self._raw_author['url'])
-        return PartialPerson.from_author(self._raw_author)
+        return PartialPerson.from_author(self._raw_author, state=self._state)
 
     @property
     def genres(self):
@@ -126,6 +128,6 @@ class Manga:
         for relation_type, relations in self._raw_related.items():
             for relation in relations:
                 relation['relation'] = relation_type
-                obj = create_relation(relation)
+                obj = create_relation(relation, self._state)
                 lst.append(obj)
         return lst

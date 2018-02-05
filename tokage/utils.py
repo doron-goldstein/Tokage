@@ -1,14 +1,14 @@
 """Utilities for the library"""
 
 import re
-from tokage.partial import PartialAnime, PartialCharacter, PartialManga, PartialPerson
+from tokage.partial import PartialAnime, PartialManga
 
 
-def create_relation(data):
+def create_relation(data, state):
     if data.get('type') == "anime":
-        return PartialAnime.from_related(data)
+        return PartialAnime.from_related(data, state=state)
     else:
-        return PartialManga.from_related(data)
+        return PartialManga.from_related(data, state=state)
 
 
 def parse_id(link):

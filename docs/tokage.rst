@@ -18,7 +18,7 @@ Anime
 .. autoclass:: Anime
 
 Manga
-~~~~~~ 
+~~~~~~
 .. autoclass:: Manga
 
 Character
@@ -35,15 +35,19 @@ Partial Classes
 PartialAnime
 ~~~~~~~~~~~~~
 .. autoclass:: PartialAnime
+   :inherited-members:
 
 PartialManga
 ~~~~~~~~~~~~~
 .. autoclass:: PartialManga
-    
+   :inherited-members:
+
 PartialCharacter
 ~~~~~~~~~~~~~~~~~
 .. autoclass:: PartialCharacter
+   :inherited-members:
 
 PartialPerson
 ~~~~~~~~~~~~~~
 .. autoclass:: PartialPerson
+   :inherited-members:
