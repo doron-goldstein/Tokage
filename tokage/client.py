@@ -196,3 +196,6 @@ class Client:
                 if id is None:
                     raise TokageNotFound("An ID corresponding to the given query was not found")
                 return id
+
+            else:
+                raise TokageNotFound("An ID corresponding to the given query was not found")
