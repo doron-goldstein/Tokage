@@ -11,6 +11,15 @@ Documentation can be found `here <http://tokage.readthedocs.io/>`_.
 
 This wrapper is aimed at ease of use and an object-oriented style, and does not require your account credentials.
 
+Installation
+------------
+
+Tokage is available through pip:
+::
+
+    pip install -U tokage
+
+
 Example
 -------
 
