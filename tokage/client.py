@@ -42,7 +42,7 @@ class Client:
     def __init__(self, session=None, *, lib='asyncio', loop=None):
         if lib not in ('asyncio', 'trio', 'curio'):
             raise ValueError("lib must be of type `str` and one of (`asyncio`, `curio`, `trio`), "
-                             f"not `{lib if isinstance(lib, str) else lib.__class__.__name__}`")
+                             "not `{}`".format(lib if isinstance(lib, str) else lib.__class__.__name__))
         self._lib = lib
         if lib == 'asyncio':
             import asyncio
