@@ -1,9 +1,7 @@
-import asyncio
 import json
 from html.parser import HTMLParser
 from urllib.parse import parse_qs
 
-import aiohttp
 from lxml import etree
 
 from tokage.anime import Anime
@@ -26,24 +24,50 @@ class Client:
     """Client connection to the MAL API.
     This class is used to interact with the API.
 
-    :param Optional[aiohttp.ClientSession] session:
-        The session to use for aiohttp requests.
+    Parameters
+    ----------
+    session : Optional[Union[aiohttp.ClientSession, asks.Session]]
+
+        The session to use for aiohttp/asks requests.
+
         Defaults to creating a new one.
 
     Attributes
     ----------
-    session : aiohttp.ClientSession
+    session : Union[aiohttp.ClientSession, asks.Session]
 
-        The session used for aiohttp requests.
+        The session used for aiohttp/asks HTTP requests.
 
     """
-    def __init__(self, session=None, *, loop=None):
-        self.loop = asyncio.get_event_loop() if loop is None else loop
-        self.session = aiohttp.ClientSession(loop=self.loop) if session is None else session
+    def __init__(self, session=None, *, lib='asyncio', loop=None):
+        if lib not in ('asyncio', 'trio', 'curio'):
+            raise ValueError("lib must be of type `str` and one of (`asyncio`, `curio`, `trio`), "
+                             f"not `{lib if isinstance(lib, str) else lib.__class__.__name__}`")
+        self._lib = lib
+        if lib == 'asyncio':
+            import asyncio
+            loop = loop or asyncio.get_event_loop()
+        self.session = session or self.make_session(lib, loop)
         self.html_parser = HTMLParser()
 
+    @staticmethod
+    def make_session(lib, loop=None):
+        if lib == 'asyncio':
+            try:
+                import aiohttp
+            except ImportError:
+                raise ImportError("To use tokage in asyncio mode, it requires the `aiohttp` module.")
+            return aiohttp.ClientSession(loop=loop)
+        try:
+            import asks
+        except ImportError:
+            raise ImportError("To use tokage in curio/trio mode, it requires the `asks` module.")
+        asks.init(lib)
+        return asks.Session()
+
     async def cleanup(self):
-        await self.session.close()
+        if self._lib == 'asyncio':
+            await self.session.close()
 
     async def _json(self, resp, encoding=None):
         """Read, decodes and unescapes a JSON `aiohttp.ClientResponse` object."""
@@ -59,23 +83,29 @@ class Client:
                 }
             return json_data
 
-        if resp._content is None:
-            await resp.read()
+        if self._lib == 'asyncio':
+            if resp._content is None:
+                await resp.read()
+                stripped = resp._content.strip()
+        else:
+            stripped = resp.content.strip()
 
-        stripped = resp._content.strip()
         if not stripped:
             return None
 
         if encoding is None:
-            encoding = resp._get_encoding()
+            if self._lib == 'asyncio':
+                encoding = resp._get_encoding()
+            else:
+                encoding = resp.encoding
 
         json_resp = json.loads(stripped.decode(encoding))
 
         return unescape_json(json_resp)
 
     async def request(self, url):
-        async with self.session.get(url) as resp:
-            return await self._json(resp)
+        resp = await self.session.get(url)
+        return await self._json(resp)
 
     async def get_anime(self, target_id):
         """Retrieves an :class:`Anime` object from an ID
