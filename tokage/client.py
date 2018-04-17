@@ -40,8 +40,8 @@ class Client:
 
     """
     def __init__(self, session=None, *, lib='asyncio', loop=None):
-        if lib not in ('asyncio', 'trio', 'curio'):
-            raise ValueError("lib must be of type `str` and one of (`asyncio`, `curio`, `trio`), "
+        if lib not in ('asyncio', 'multio'):
+            raise ValueError("lib must be of type `str` and be either `asyncio` or `multio`, "
                              "not `{}`".format(lib if isinstance(lib, str) else lib.__class__.__name__))
         self._lib = lib
         if lib == 'asyncio':
@@ -62,7 +62,6 @@ class Client:
             import asks
         except ImportError:
             raise ImportError("To use tokage in curio/trio mode, it requires the `asks` module.")
-        asks.init(lib)
         return asks.Session()
 
     async def cleanup(self):

@@ -20,8 +20,9 @@ Tokage is an *asynchronous* library.
 This means you must use some kind of async library to handle the HTTP requests to the API.
 
 Tokage supports asyncio, which is provided in the standard python library.
+
 Additionally, Tokage also supports `curio <https://github.com/dabeaz/curio>`_ and `trio <https://github.com/python-trio/trio>`_, two awesome libraries which solve many of the problems asyncio has.
-If you prefer, you may also use `multio <https://github.com/theelous3/multio>`_, a library that brings the two together
+`multio <https://github.com/theelous3/multio>`_, a library that brings the two together, is required in order to use them.
 
 Whichever you prefer, tokage will adapt to it. For more info on how to use each type of library, refer to the examples below.
 
@@ -60,60 +61,6 @@ Prints:
     Manga title: Boku no Hero Academia
 
 
-Basic Curio Example
-~~~~~~~~~~~~~~~~~~~
-
-::
-
-    import curio
-    import tokage
-
-    async def main():
-        client = tokage.Client(lib='curio')  # Create a client instance. Tell tokage to use curio
-
-        anime = await client.get_anime(1)  # Get the Anime with ID `1`, which is Cowboy Bebop
-
-        print("Anime title:", anime.title)  # Print the title and premiere season of the Anime
-        print("Started airing:", anime.premiered)
-
-        await client.cleanup()  # Finally, clean up (currently, this does nothing in curio/trio mode, so it can be omitted)
-
-    curio.run(main)  # Run main
-
-Prints:
-::
-
-    Anime title: Cowboy Bebop
-    Started airing: Spring 1998
-
-
-Basic Trio Example
-~~~~~~~~~~~~~~~~~~
-
-::
-
-    import trio
-    import tokage
-
-    async def main():
-        client = tokage.Client(lib='trio')  # Create a client instance. Tell tokage to use trio
-
-        anime = await client.get_anime(1)  # Get the Anime with ID `1`, which is Cowboy Bebop
-
-        print("Anime title:", anime.title)  # Print the title and premiere season of the Anime
-        print("Started airing:", anime.premiered)
-
-        await client.cleanup()  # Finally, clean up (currently, this does nothing in curio/trio mode, so it can be omitted)
-
-    trio.run(main)  # Run main
-
-Prints:
-::
-
-    Anime title: Cowboy Bebop
-    Started airing: Spring 1998
-
-
 Basic Multio Example
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -122,10 +69,10 @@ Basic Multio Example
     import multio
     import tokage
 
-    multio.init('trio')  # initiate multio to use trio. Also works the same with curio
+    multio.init('trio')  # initialize multio to use trio. Also works the same with curio
 
     async def main():
-        client = tokage.Client(lib='trio')  # Create a client instance. Tell tokage to use trio
+        client = tokage.Client(lib='multio')  # Create a client instance. Tell tokage to use multio (in this case trio)
 
         anime = await client.get_anime(1)  # Get the Anime with ID `1`, which is Cowboy Bebop
 
