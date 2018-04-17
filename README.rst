@@ -5,7 +5,7 @@ Tokage
 Tokage is an async wrapper for the `MyAnimeList <https://myanimelist.net/>`_ API.
 
 This wrapper is compatible with Python 3.5+ and uses `Jikan <http://jikan.me/>`_ as an alternative to the default MAL API.
-Tokage is compatible with python's standard asyncio or `trio <https://github.com/python-trio/trio>`_ / `curio <https://github.com/dabeaz/curio>`_ through `multio <https://github.com/theelous3/multio>`_).
+Tokage is compatible with python's standard asyncio or `trio <https://github.com/python-trio/trio>`_ / `curio <https://github.com/dabeaz/curio>`_ through `multio <https://github.com/theelous3/multio>`_.
 
 Documentation can be found `here <http://tokage.readthedocs.io/>`_.
 
