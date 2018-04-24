@@ -51,7 +51,7 @@ class PartialAnime(BasePartial):
     @classmethod
     def from_character(cls, data, **kwargs):
         title = data.get('name')
-        id = int(data.get('id'))
+        id = int(data.get('mal_id'))
         url = data.get('url')
         return cls(title, id, url, state=kwargs.get("state"))
 
@@ -93,7 +93,7 @@ class PartialManga(BasePartial):
     @classmethod
     def from_character(cls, data, **kwargs):
         title = data.get('name')
-        id = int(data.get('id'))
+        id = int(data.get('mal_id'))
         url = data.get('url')
         return cls(title, id, url, state=kwargs.get("state"))
 
@@ -127,7 +127,7 @@ class PartialPerson(BasePartial):
     @classmethod
     def from_voice_acting(cls, data, **kwargs):
         name = data.get('name')
-        id = int(data.get('id'))
+        id = int(data.get('mal_id'))
         url = data.get('url')
         lang = data.get('language')
         return cls(name, id, url, language=lang, state=kwargs.get("state"))
@@ -135,7 +135,7 @@ class PartialPerson(BasePartial):
     @classmethod
     def from_author(cls, data, **kwargs):
         name = data.get('name')
-        id = int(data.get('id'))
+        id = int(data.get('mal_id'))
         url = data.get('url')
         return cls(name, id, url, state=kwargs.get("state"))
 
@@ -169,7 +169,7 @@ class PartialCharacter(BasePartial):
     @classmethod
     def from_person(cls, data, anime, **kwargs):
         name = data.get('name')
-        id = int(data.get('id'))
+        id = int(data.get('mal_id'))
         url = data.get('url')
         return cls(name, id, url, anime=anime, state=kwargs.get("state"))
 

@@ -61,9 +61,9 @@ class Person(tokage.TokageBase):
         lst = []
         for va in self._raw_voice_acting:
             char = va['character']
-            char['id'] = parse_id(char['url'])
+            char['mal_id'] = parse_id(char['url'])
             anime = va['anime']
-            anime['id'] = parse_id(anime['url'])
+            anime['mal_id'] = parse_id(anime['url'])
             anime_obj = PartialAnime.from_character(anime, state=self._state)
             obj = PartialCharacter.from_person(char, anime_obj, state=self._state)
             lst.append(obj)

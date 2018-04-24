@@ -115,7 +115,7 @@ class Manga(tokage.TokageBase):
 
     @property
     def author(self):
-        self._raw_author['id'] = parse_id(self._raw_author['url'])
+        self._raw_author['mal_id'] = parse_id(self._raw_author['url'])
         return PartialPerson.from_author(self._raw_author, state=self._state)
 
     @property

@@ -60,7 +60,7 @@ class Character(tokage.TokageBase):
     def animeography(self):
         lst = []
         for anime in self._raw_animeography:
-            anime['id'] = parse_id(anime['url'])
+            anime['mal_id'] = parse_id(anime['url'])
             obj = PartialAnime.from_character(anime, state=self._state)
             lst.append(obj)
         return lst
@@ -69,7 +69,7 @@ class Character(tokage.TokageBase):
     def mangaography(self):
         lst = []
         for manga in self._raw_mangaography:
-            manga['id'] = parse_id(manga['url'])
+            manga['mal_id'] = parse_id(manga['url'])
             obj = PartialManga.from_character(manga, state=self._state)
             lst.append(obj)
         return lst
@@ -78,7 +78,7 @@ class Character(tokage.TokageBase):
     def voice_actors(self):
         lst = []
         for va in self._raw_voice_actors:
-            va['id'] = parse_id(va['url'])
+            va['mal_id'] = parse_id(va['url'])
             obj = PartialPerson.from_voice_acting(va, state=self._state)
             lst.append(obj)
         return lst

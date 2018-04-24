@@ -158,7 +158,7 @@ class Client:
         resp = await self.request(SEARCH_URL + "anime/" + query)
         if resp is None or not resp['result']:
             raise AnimeNotFound("Anime `{}` could not be found".format(query))
-        return [PartialAnime(a['title'], a['id'], a['url'], state=self) for a in resp['result']]
+        return [PartialAnime(a['title'], a['mal_id'], a['url'], state=self) for a in resp['result']]
 
     async def search_manga(self, query):
         """Search for :class:`PartialManga` by query.
@@ -168,7 +168,7 @@ class Client:
         resp = await self.request(SEARCH_URL + "manga/" + query)
         if resp is None or not resp['result']:
             raise MangaNotFound("Manga `{}` could not be found".format(query))
-        return [PartialManga(m['title'], m['id'], m['url'], state=self) for m in resp['result']]
+        return [PartialManga(m['title'], m['mal_id'], m['url'], state=self) for m in resp['result']]
 
     async def search_character(self, query):
         """Search for :class:`PartialCharacter` by query.
@@ -188,7 +188,7 @@ class Client:
         resp = await self.request(SEARCH_URL + "person/" + query)
         if resp is None or not resp['result']:
             raise PersonNotFound("Person `{}` could not be found".format(query))
-        return [PartialPerson(p['name'], p['id'], p['url'], state=self) for p in resp['result']]
+        return [PartialPerson(p['name'], p['mal_id'], p['url'], state=self) for p in resp['result']]
 
     async def search_id(self, type_, query):
         """Parse a google query and return the ID.
