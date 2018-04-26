@@ -32,6 +32,17 @@ class Client:
 
         Defaults to creating a new one.
 
+    lib : Optional[str]
+
+        The async library to use Tokage with. Defaults to `asyncio`.
+        Valid libraries: `asyncio`, `multio`.
+
+    loop : Optional[asyncio.BaseEventLoop]
+
+        For use with `asyncio`. The event loop to use for `aiohttp`.
+
+        Defaults to creating a new one.
+
     Attributes
     ----------
     session : Union[aiohttp.ClientSession, asks.Session]
@@ -47,11 +58,11 @@ class Client:
         if lib == 'asyncio':
             import asyncio
             loop = loop or asyncio.get_event_loop()
-        self.session = session or self.make_session(lib, loop)
-        self.html_parser = HTMLParser()
+        self.session = session or self._make_session(lib, loop)
+        self._html_parser = HTMLParser()
 
     @staticmethod
-    def make_session(lib, loop=None):
+    def _make_session(lib, loop=None):
         if lib == 'asyncio':
             try:
                 import aiohttp
@@ -72,7 +83,7 @@ class Client:
         """Read, decodes and unescapes a JSON `aiohttp.ClientResponse` object."""
         def unescape_json(json_data):
             if isinstance(json_data, str):
-                return self.html_parser.unescape(json_data)
+                return self._html_parser.unescape(json_data)
             if isinstance(json_data, list):
                 return [unescape_json(i) for i in json_data]
             if isinstance(json_data, dict):
