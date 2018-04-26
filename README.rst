@@ -23,7 +23,7 @@ Tokage is available through pip:
 Example
 -------
 
-::
+.. code-block:: python3
 
     import asyncio
     import tokage
