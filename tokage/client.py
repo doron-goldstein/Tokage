@@ -12,7 +12,7 @@ from tokage.person import Person
 from tokage.utils import parse_id
 from tokage.partial import *  # noqa
 
-BASE_URL = 'https://api.jikan.me/'
+BASE_URL = 'https://api.jikan.moe/'
 ANIME_URL = BASE_URL + 'anime/'
 MANGA_URL = BASE_URL + 'manga/'
 PERSON_URL = BASE_URL + 'person/'
