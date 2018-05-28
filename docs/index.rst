@@ -6,10 +6,10 @@
 Welcome to Tokage's documentation!
 ==================================
 
-Tokage is an asyncio-based wrapper for the MAL api (using jikan.me).
+Tokage is an asyncio-based wrapper for the MAL api (using jikan.moe).
 This module features an easy to understand object-oriented style.
 
-The source code can be found `here <https://github.com/BlackSynder/Tokage>`_.
+The source code can be found `here <https://github.com/SynderBlack/Tokage>`_.
 
 Contents
 --------
