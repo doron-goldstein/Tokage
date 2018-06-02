@@ -7,13 +7,13 @@ with open("version.txt") as f:
     version = f.read()  # TODO: handle this better
 
 setup(
-    name='Tokage',
+    name='Kadal',
     author='SynderBlack',
-    version=version,
+    version="1.4",
     packages=['tokage'],
     license='MIT',
     description='Async wrapper for the MyAnimeList API',
-    url='https://gitlab.com/Synder/Tokage',
+    url='https://github.com/SynderBlack/Tokage',
     include_package_data=True,
     install_requires=requirements
 )
