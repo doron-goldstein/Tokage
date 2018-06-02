@@ -7,7 +7,7 @@ with open("version.txt") as f:
     version = f.read()  # TODO: handle this better
 
 setup(
-    name='Kadal',
+    name='Tokage',
     author='SynderBlack',
     version="1.4",
     packages=['tokage'],
