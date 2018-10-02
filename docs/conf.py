@@ -17,6 +17,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import pkg_resources
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
@@ -57,9 +58,7 @@ author = 'Synder'
 # built documents.
 #
 # The short X.Y version.
-version = ''
-with open("../version.txt") as f:
-    version = f.readline()
+version = pkg_resources.get_distribution("tokage").version
 # The full version, including alpha/beta/rc tags.
 release = version
 
